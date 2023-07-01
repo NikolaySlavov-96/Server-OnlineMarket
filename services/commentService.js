@@ -2,11 +2,11 @@ const Comment = require("../models/CommentarModel");
 const { createNewDate } = require("../util/dates");
 
 const getAllComment = (idProduct) => {
-    return Comment.find({ productId: idProduct });
+    return Comment.find({ productId: idProduct }).find({ isDelete: false });
 }
 
 const getCommentById = (idComment) => {
-    return Comment.findById(idComment);
+    return Comment.findById(idComment).find({ isDelete: false });
 }
 
 const createCommentForProduct = async (idProduct, owner, dataComment) => {
@@ -17,7 +17,7 @@ const createCommentForProduct = async (idProduct, owner, dataComment) => {
         commentar: dataComment.commentar,
         createAt: createNewDate(),
         lastUpdate: createNewDate(),
-    })
+    });
     return createComment;
 }
 
