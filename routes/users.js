@@ -8,15 +8,19 @@ const { isGuest, hasUser } = require('../middlewares/guards');
 users.post('/register',
     isGuest(),
     body('email').isEmail().withMessage('Emais is not corret'),
-    body('username').notEmpty().withMessage('Username is required'),
-    body('username').isLength({ min: 6 }).withMessage('Username minimal size is 6 characters'),
     body('password').isLength({ min: 5 }).withMessage('Password is not doesn\'t long'),
-    body('year').notEmpty().withMessage('Years is requited'),
+    body('telephone').notEmpty().withMessage('Telephone number is required')
+        .isMobilePhone().withMessage('Telephone number is not valid'),
+    body('birthday').notEmpty().withMessage('Birthday is required'),
+    body('firstName').notEmpty().withMessage('First name required')
+        .isLength({ min: 3 }).withMessage('First name is minilam 3 letter'),
+    body('lastName').notEmpty().withMessage('Last name is required')
+        .isLength({ min: 3 }).withMessage('Last name is minimal 3 letter'),
     userController.createUser);
 
 users.post('/login',
     isGuest(),
-    body('username').notEmpty().withMessage('Username is requied'),
+    body('emil').notEmpty().withMessage('Username is requied'),
     body('password').notEmpty().withMessage('Passwor is required'),
     userController.getUser);
 
