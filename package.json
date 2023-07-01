@@ -1,0 +1,22 @@
+{
+  "name": "api-shop-hop",
+  "version": "1.0.0",
+  "description": "API for new project",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikolaySlavov-96/API-shop-hop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikolaySlavov-96/API-shop-hop/issues"
+  },
+  "homepage": "https://github.com/NikolaySlavov-96/API-shop-hop#readme",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
