@@ -20,9 +20,9 @@ const getCommentarsByIdProduct = async (req, res) => {
 const getCommentByIdComment = async (req, res) => {
     const idComment = req.params.idComment;
 
-    const { _id, ownerId, name, commentar, isDelete } = await getCommentById(idComment);
+    const { _id, ownerId, name, commentar, createAt } = await getCommentById(idComment);
 
-    res.json({ _id, ownerId, name, commentar, isDelete });
+    res.json({ _id, ownerId, name, commentar, createAt });
 }
 
 const createComments = async (req, res) => {
@@ -34,8 +34,10 @@ const createComments = async (req, res) => {
             throw errors;
         }
 
-        const { ownerId, name, commentar, isDelete, } = await createCommentForProduct(req.params.idSource, req.user._id, req.body);
-        res.json({ ownerId, name, commentar, isDelete, });
+        // code for chech whats letter and change isVisible to false or not
+
+        const { _id, ownerId, name, commentar, createAt, } = await createCommentForProduct(req.params.idSource, req.user._id, req.body);
+        res.json({ _id, ownerId, name, commentar, createAt, });
 
     } catch (err) {
         const message = errorParser(err);

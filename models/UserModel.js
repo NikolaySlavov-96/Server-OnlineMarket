@@ -1,23 +1,29 @@
 const { model, Schema } = require('mongoose');
 
+const BIR_PATTERN = /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/;
+
 const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true, minLength: [6, 'Username minimal size is 6 characters'] },
+    imgUrl: { type: String, required: true },
     password: { type: String, required: true },
-    year: { type: Number, required: true, min: [1, 'Minimal years is 1'] },
+    telephone: { type: Number, require: true },
+    birthday: {
+        type: String, required: true, validate: {
+            validator: (value) => BIR_PATTERN.test(value),
+            message: 'Invalid birthday date'
+        }
+    },
+    firstName: { type: String, required: true },
+    middleName: { type: String },
+    lastName: { type: String, required: true },
     creadAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
+    role: { type: [{ type: String, enum: ['customer, partner, manager, admin'] }], default: ['customer'] },
+    isActivate: { type: Boolean, default: false },
     isDelete: { type: Boolean, default: false },
 });
 
 userSchema.index({ email: 1 }, {
-    collation: {
-        locale: 'en',
-        strength: 2
-    }
-})
-
-userSchema.index({ username: 1 }, {
     collation: {
         locale: 'en',
         strength: 2
