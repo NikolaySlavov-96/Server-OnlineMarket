@@ -6,7 +6,7 @@ const getAll = (query, limit, skipSource) => {
 }
 
 const getById = (idSource) => {
-    return Source.findById(idSource).find({ isDelete: false });
+    return Source.findById(idSource);
 }
 
 const create = (dataSource) => {

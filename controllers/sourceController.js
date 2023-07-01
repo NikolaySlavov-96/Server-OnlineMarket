@@ -46,12 +46,13 @@ const createSource = async (req, res) => {
 
 const updateSource = async (req, res) => {
     const sourceInfo = await getById(req.params.idSource);
-
-    if (sourceInfo.owner.toString() !== req.user._id) {
-        return res.status(403).json({ message: 'You canno\'t modify this sources' });
-    }
-
+    
     try {
+        
+        if(sourceInfo.isVision) {
+            throw new Error('Product is deliting');
+        }
+
         const { errors } = validationResult(req);
 
         if (errors.length > 0) {
@@ -72,10 +73,6 @@ const updateSource = async (req, res) => {
 
 const deleteSource = async (req, res) => {
     const souseInfo = await getById(req.params.idSource);
-
-    if (souseInfo.owner.toString() !== req.user._id) {
-        return res.status(403).json({ message: 'You canno\'t modify this sources' });
-    };
 
     try {
         await deleteById(req.params.idSource);
