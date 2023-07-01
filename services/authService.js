@@ -64,7 +64,8 @@ function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivat
     const payload = {
         _id,
         email,
-        firstName
+        firstName,
+        role,
     }
 
     return {

@@ -49,7 +49,7 @@ const getUser = async (req, res) => {
         }
 
         const body = req.body;
-        const token = await login(body.username, body.password);
+        const token = await login(body.email, body.password);
         res.json(token);
     } catch (err) {
         const message = errorParser(err);

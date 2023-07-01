@@ -18,7 +18,18 @@ function isGuest() {
     }
 }
 
+function hasRole(condition) {
+    return (req, res, next) => {
+        if(req.user && condition.includes(req.user.role)) {
+            next()
+        } else {
+            res.status(401).json({message: 'error'})
+        }
+    }
+}
+
 module.exports = {
     hasUser,
-    isGuest
+    isGuest,
+    hasRole,
 }

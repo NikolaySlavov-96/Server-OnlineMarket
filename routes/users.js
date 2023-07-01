@@ -20,7 +20,7 @@ users.post('/register',
 
 users.post('/login',
     isGuest(),
-    body('emil').notEmpty().withMessage('Username is requied'),
+    body('email').notEmpty().withMessage('Email is requied'),
     body('password').notEmpty().withMessage('Passwor is required'),
     userController.getUser);
 

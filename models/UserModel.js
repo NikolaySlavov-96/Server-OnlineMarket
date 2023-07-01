@@ -18,7 +18,7 @@ const userSchema = new Schema({
     lastName: { type: String, required: true },
     creadAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
-    role: { type: [{ type: String, enum: ['customer', 'partner', 'manager', 'admin'] }], default: ['customer'] },
+    role: { type: [{ type: String, enum: ['customer', 'partner', 'moderator', 'manager', 'admin'] }], default: ['customer'] },
     isActivate: { type: Boolean, default: false },
     isDelete: { type: Boolean, default: false },
 });
