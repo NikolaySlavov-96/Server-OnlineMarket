@@ -1,3 +1,5 @@
+const { getCommentById } = require("../services/commentService");
+
 function hasUser() {
     return (req, res, next) => {
         if (req.user) {
@@ -19,11 +21,14 @@ function isGuest() {
 }
 
 function hasRole(condition) {
-    return (req, res, next) => {
-        if(req.user && condition.includes(req.user.role)) {
+    return async (req, res, next) => {
+
+        const ownerDate = req?.params?.idComment && await getCommentById(req.params.idComment);
+
+        if ((req.user && condition.map(e => req.user.role.includes(e))) || ownerDate.owner.toString() == req.user._id) {
             next()
         } else {
-            res.status(401).json({message: 'error'})
+            res.status(401).json({ message: 'You canno\'t modify this sources' });
         }
     }
 }
