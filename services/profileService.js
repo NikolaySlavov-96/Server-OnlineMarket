@@ -9,9 +9,14 @@ const getUserById = async (userId) => {
 const editUserById = async (userId, data) => {
     const editUser = await UserMode.findById(userId);
 
-    editUser.username = data.username;
-    // editUser.password = data.password;
-    editUser.year = data.year;
+    editUser.imgUrl = data.imgUrl;
+    editUser.password = data.password; // To Do verification password before change
+    editUser.telephone = data.telephone;
+    editUser.birthday = data.birthday;     // To Do verification without have cheating
+    editUser.firstName = data.firstName;
+    editUser.middleName = data.middleName;
+    editUser.lastName = data.lastName;
+    
     editUser.lastUpdate = createNewDate();
 
     return await editUser.save();
