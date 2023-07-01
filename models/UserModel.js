@@ -6,7 +6,7 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     imgUrl: { type: String, required: true },
     password: { type: String, required: true },
-    telephone: { type: String, require: true },
+    telephone: { type: String, require: true, unique: true },
     birthday: {
         type: String, required: true, validate: {
             validator: (value) => BIR_PATTERN.test(value),
