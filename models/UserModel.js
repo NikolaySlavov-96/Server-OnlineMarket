@@ -6,7 +6,7 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     imgUrl: { type: String, required: true },
     password: { type: String, required: true },
-    telephone: { type: Number, require: true },
+    telephone: { type: String, require: true },
     birthday: {
         type: String, required: true, validate: {
             validator: (value) => BIR_PATTERN.test(value),
@@ -18,10 +18,11 @@ const userSchema = new Schema({
     lastName: { type: String, required: true },
     creadAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
-    role: { type: [{ type: String, enum: ['customer, partner, manager, admin'] }], default: ['customer'] },
+    role: { type: [{ type: String, enum: ['customer', 'partner', 'manager', 'admin'] }], default: ['customer'] },
     isActivate: { type: Boolean, default: false },
     isDelete: { type: Boolean, default: false },
 });
+
 
 userSchema.index({ email: 1 }, {
     collation: {
