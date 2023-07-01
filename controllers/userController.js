@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 const { register, login, logout } = require('../services/authService');
 const { errorParser } = require('../util/parser');
+const { createNewDate } = require('../util/dates');
 
 const createUser = async (req, res) => {
     const { errors } = validationResult(req);
@@ -14,7 +15,25 @@ const createUser = async (req, res) => {
         if (body.password !== body.rePassword) {
             throw new Error('Password not\t match');
         }
-        const token = await register(body.username, body.email, body.password, body.year);
+
+        if (!body.imgUrl) {
+            body.imgUrl = '/statcil/profile1'
+        }
+
+        if (body.birthday) {
+            const birthdayDate = body.birthday.split('/');
+            const year = birthdayDate[2];
+            const month = birthdayDate[1];
+            const day = birthdayDate[0];
+            const checkDate = new Date(year, month, day);
+
+            const todayDate = createNewDate();
+            if (todayDate >= checkDate) {
+                throw new Error('Birthday date is invalid');
+            }
+        }
+
+        const token = await register(body.email, body.imgUrl, body.password, body.telephone, body.birthday, body.firstName, body.middleName, body.lastName);
         res.json(token);
     } catch (err) {
         const message = errorParser(err);
