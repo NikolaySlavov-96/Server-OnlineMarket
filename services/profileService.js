@@ -11,7 +11,6 @@ const editUserById = async (userId, data) => {
 
     editUser.imgUrl = data.imgUrl;
     editUser.password = data.password; // To Do verification password before change
-    editUser.telephone = data.telephone;
     editUser.birthday = data.birthday;     // To Do verification without have cheating
     editUser.firstName = data.firstName;
     editUser.middleName = data.middleName;

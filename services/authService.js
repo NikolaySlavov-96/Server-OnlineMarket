@@ -6,6 +6,7 @@ const JWT_Secret = process.env.JWT_SECRES;
 
 const UserMode = require("../models/UserModel");
 const BlackList = require('../models/backListModel');
+const { createNewDate } = require('../util/dates');
 
 async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName) {
 
@@ -14,7 +15,10 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
         throw new Error('Email is taken');
     }
 
-    const date = new Date();
+    const existingTelephoneNumber = await UserMode.findOne({ telephone });
+    if (existingTelephoneNumber) {
+        throw new Error('Telephone Number is using');
+    }
 
     const userData = await UserMode.create({
         email,
@@ -25,8 +29,8 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
         firstName,
         middleName,
         lastName,
-        creadAt: date,
-        lastUpdate: date,
+        creadAt: createNewDate(),
+        lastUpdate: createNewDate(),
     })
 
     return createTokent(userData);

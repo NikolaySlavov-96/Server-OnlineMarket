@@ -11,7 +11,9 @@ users.post('/register',
     body('password').isLength({ min: 5 }).withMessage('Password is not doesn\'t long'),
     body('telephone').notEmpty().withMessage('Telephone number is required')
         .isMobilePhone().withMessage('Telephone number is not valid'),
-    body('birthday').notEmpty().withMessage('Birthday is required'),
+    body('birthday').notEmpty().withMessage('Birthday is required')
+        .custom(e => /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/.test(e))
+        .withMessage('Invalid birthday date'),
     body('firstName').notEmpty().withMessage('First name required')
         .isLength({ min: 3 }).withMessage('First name is minilam 3 letter'),
     body('lastName').notEmpty().withMessage('Last name is required')

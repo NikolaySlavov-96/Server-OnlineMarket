@@ -25,7 +25,7 @@ const updateUser = async (req, res) => {
             const checkDate = new Date(year, month, day);
 
             const todayDate = createNewDate();
-            if (todayDate >= checkDate) {
+            if (todayDate <= checkDate) {
                 throw new Error('Birthday date is invalid');
             }
         }
