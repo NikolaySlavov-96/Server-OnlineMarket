@@ -105,9 +105,25 @@ async function verificationToken(token) {
     return jwt.verify(token, JWT_Secret);
 }
 
+async function activateAccount(userId, activateCode) {
+    const resultCode = await activationModel.findOne({ userId });
+
+    if (resultCode.sendCode == activateCode) {
+        resultCode.dateUsing = createNewDate();
+        const userDate = await UserMode.findById(userId);
+        userDate.isActivate = true;
+        await resultCode.save();
+        await userDate.save();
+        return { message: 'Complete verification' }
+    }
+
+    throw new Error('Activation Code don\'t match');
+}
+
 module.exports = {
     register,
     login,
     logout,
-    verificationToken
+    verificationToken,
+    activateAccount,
 }
