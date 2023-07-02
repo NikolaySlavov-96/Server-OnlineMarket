@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
         }
 
         if (!body.imgUrl) {
-            body.imgUrl = '/statcil/profile1'
+            body.imgUrl = '/statcil/profile1' // To Do change picture address
         }
 
         if (body.birthday) {
