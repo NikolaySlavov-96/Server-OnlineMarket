@@ -1,12 +1,16 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const uuid = require('uuid');
 require('dotenv').config();
 
 const JWT_Secret = process.env.JWT_SECRES;
 
 const UserMode = require("../models/UserModel");
 const BlackList = require('../models/backListModel');
+const activationModel = require('../models/activationModel');
+
 const { createNewDate } = require('../util/dates');
+const { sendFromNoReplyEmail } = require('./emailService');
 
 async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName) {
 
@@ -31,7 +35,17 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
         lastName,
         creadAt: createNewDate(),
         lastUpdate: createNewDate(),
-    })
+    });
+
+    const activateCodel = uuid.v4().slice(0, 7);
+    const userId = userData._id;
+    await activationModel.create({
+        userId: userId,
+        sendCode: activateCodel,
+        dateSend: createNewDate(),
+    });
+
+    sendFromNoReplyEmail(email, 'Successful Register', 'register', { userId, activateCodel })
 
     return createTokent(userData);
 }
