@@ -50,7 +50,7 @@ const updateSource = async (req, res) => {
     try {
         
         if(sourceInfo.isVision) {
-            throw new Error('Product is deliting');
+            throw new Error('Product is deleting');
         }
 
         const { errors } = validationResult(req);
