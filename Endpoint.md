@@ -74,7 +74,20 @@
 
 5. Search Endpoint
 
-- get search date GET --> /search?where
+   - get search date GET --> /search?where
+
+6. Calls with Customer
+   - get all calls with customer GET --> /call/user/:userId?sortBy=callDate&limit={quant}
+   - post calls for customer talks POST --> /call/user/:userId
+   {
+      type
+      description
+   }
+   - edit calls for customer talks PUT --> /call/user/:userId?callsId={callsId}
+   {
+      type
+      description
+   }
 
 ## Front End endpoints
 
