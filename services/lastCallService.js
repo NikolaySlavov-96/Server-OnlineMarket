@@ -1,4 +1,5 @@
 const lastCallModell = require("../models/lastCallModel");
+const messageModel = require("../models/messageCalls");
 const { createNewDate } = require("../util/dates");
 
 
@@ -7,6 +8,9 @@ const getCallsWithCustomer = async (userId, query) => {
 };
 
 const createCallWithCustomer = async (userId, date) => {
+
+    //To Do given description from DB not browser
+    // const message = await messageModel.findById(date.idType);
 
     const createCalls = await lastCallModell.create({
         userId,
@@ -24,6 +28,7 @@ const editCallWithCustomer = async (userId, callId) => {
     if (oldDate.userId.toString() !== userId.toString()) {
         throw new Error('User id or call Id not match');
     }
+    //To Do given description from DB not browser
 
     oldDate.type = date.type;
     oldDate.description = date.description;
@@ -32,8 +37,13 @@ const editCallWithCustomer = async (userId, callId) => {
     await oldDate.save();
 };
 
+const allMessage = async () => {
+    return messageModel.find({});
+};
+
 module.exports = {
     getCallsWithCustomer,
     createCallWithCustomer,
     editCallWithCustomer,
+    allMessage,
 }

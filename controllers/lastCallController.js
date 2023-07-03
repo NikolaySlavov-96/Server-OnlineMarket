@@ -24,8 +24,14 @@ const editCall = async (req, res) => {
     }
 };
 
+const getAllMessage = async (req, res) => {
+    const messages = await getAllMessage();
+    res.json(messages);
+}
+
 module.exports = {
     getUser,
     createCall,
     editCall,
+    getAllMessage,
 }
