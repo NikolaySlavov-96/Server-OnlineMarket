@@ -25,6 +25,8 @@
     accessToken
     }
    - activation account POST --> /auth/activation?userId={userId}&activateCode={activateCode}
+   - check field whether it is busy or not GET --> /auth/check?email={email}  -> return true or false
+   - check field whether it is busy or not GET --> /auth/check?telephone={tel} -> return true or false
 
 2. Userprofil Endpoint
     - get user data GET --> /users/profile

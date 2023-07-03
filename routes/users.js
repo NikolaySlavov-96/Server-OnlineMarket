@@ -34,5 +34,8 @@ users.post('/activation',
     //check have query
     userController.activateUser);
 
+users.get('/check',
+    userController.checkFields);
+
 
 module.exports = users;

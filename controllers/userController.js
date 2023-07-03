@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-const { register, login, logout, activateAccount } = require('../services/authService');
+const { register, login, logout, activateAccount, checkFieldInDB } = require('../services/authService');
 const { errorParser } = require('../util/parser');
 const { createNewDate } = require('../util/dates');
 
@@ -81,10 +81,16 @@ const activateUser = async (req, res) => {
     }
 };
 
+const checkFields = async (req, res) => {
+    const result = await checkFieldInDB(req.query);
+    res.json(result);
+}
+
 
 module.exports = {
     createUser,
     getUser,
     exitUset,
     activateUser,
+    checkFields,
 }

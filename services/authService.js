@@ -120,10 +120,16 @@ async function activateAccount(userId, activateCode) {
     throw new Error('Activation Code don\'t match');
 }
 
+async function checkFieldInDB(date) {
+    const isUsing = await UserMode.findOne(date).count() > 0;
+    return isUsing;
+}
+
 module.exports = {
     register,
     login,
     logout,
     verificationToken,
     activateAccount,
+    checkFieldInDB
 }
