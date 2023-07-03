@@ -1,7 +1,7 @@
 const users = require('express').Router();
 const { body } = require('express-validator');
 
-const userController = require('../controllers/userController');
+const userController = require('../controllers/authController');
 const { isGuest, hasUser } = require('../middlewares/guards');
 
 

@@ -1,4 +1,4 @@
-const auth = require("../routes/users");
+const auth = require("../routes/auth");
 const user = require("../routes/profile");
 const source = require("../routes/source");
 const search = require("../routes/search");
