@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-const { register, login, logout } = require('../services/authService');
+const { register, login, logout, activateAccount } = require('../services/authService');
 const { errorParser } = require('../util/parser');
 const { createNewDate } = require('../util/dates');
 
@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
         }
 
         if (!body.imgUrl) {
-            body.imgUrl = '/statcil/profile1'
+            body.imgUrl = '/statcil/profile1' // To Do change picture address
         }
 
         if (body.birthday) {
@@ -67,9 +67,24 @@ const exitUset = async (req, res) => {
     }
 }
 
+const activateUser = async (req, res) => {
+    const query = req.query;
+    const userId = query.userId;
+    const activateCode = query.activateCode;
+
+    try {
+        const result = await activateAccount(userId, activateCode);
+        res.status(202).json(result);
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
+};
+
 
 module.exports = {
     createUser,
     getUser,
-    exitUset
+    exitUset,
+    activateUser,
 }

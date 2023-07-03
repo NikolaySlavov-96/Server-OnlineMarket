@@ -42,6 +42,7 @@ source.get('/product/:idSource/comment/:idComment', commetController.getCommentB
 
 source.post('/product/:idSource/comment',
     hasUser(),
+    hasRole(role.createCommentar),
     body('name').isLength({ min: 3 }).withMessage('Name length is minimal 3 characters'),
     body('commentar').isLength({ min: 3 }).withMessage('Commentar length is minimal 3 characters'),
     commetController.createComments);

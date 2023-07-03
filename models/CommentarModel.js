@@ -7,7 +7,6 @@ const commentarSchema = new Schema({
     commentar: { type: String, required: true, minLength: [3, 'Commentar field is minilam 3 characters'] },
     createAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
-    isVision: { type: Boolean, default: true },
     isDelete: { type: Boolean, default: false },
 });
 

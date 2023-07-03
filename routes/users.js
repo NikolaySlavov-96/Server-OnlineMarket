@@ -30,5 +30,9 @@ users.get('/logout',
     hasUser(),
     userController.exitUset);
 
+users.post('/activation',
+    //check have query
+    userController.activateUser);
+
 
 module.exports = users;
