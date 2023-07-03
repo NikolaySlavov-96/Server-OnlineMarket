@@ -1,4 +1,4 @@
-const Comment = require("../models/CommentarModel");
+const Comment = require("../models/commentarModel");
 const { createNewDate } = require("../util/dates");
 
 const getAllComment = (idProduct) => {

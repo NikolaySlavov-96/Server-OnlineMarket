@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const JWT_Secret = process.env.JWT_SECRES;
 
-const UserMode = require("../models/UserModel");
+const UserMode = require("../models/userModel");
 const BlackList = require('../models/backListModel');
 const activationModel = require('../models/activationModel');
 
