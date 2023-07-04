@@ -1,8 +1,8 @@
 const { validationResult } = require('express-validator');
 
 const { getAllComment, createCommentForProduct, editCommentById, deleteCommentById, getCommentById } = require("../services/commentService");
-const { errorParser } = require('../util/parser');
 const { getById } = require('../services/shortProdService');
+const { errorParser } = require('../util/parser');
 
 
 const getCommentarsByIdProduct = async (req, res) => {
