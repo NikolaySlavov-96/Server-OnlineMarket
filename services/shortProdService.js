@@ -15,10 +15,9 @@ const getById = async (category, idSource) => {
     const shortDate = await shortProduct.findOne({ productId: idSource }).lean();
     const otherDate = await allProductCollection[category].findById(idSource).lean();
 
-    console.log(shortDate);
-    console.log(otherDate);
-    //To Do collect all neccassery date
-    return { message: 'Successful' }
+    const allDateOfDB = Object.assign({ ...shortDate }, otherDate);
+
+    return allDateOfDB
 }
 
 const create = async (dataSource) => {
