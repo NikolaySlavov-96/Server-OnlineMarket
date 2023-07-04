@@ -4,10 +4,14 @@ const source = require("../routes/source");
 const search = require("../routes/search");
 const lastCall = require("../routes/lastCall");
 
+const reward = require("../routes/reward");
+
 module.exports = (app) => {
     app.use('/auth', auth);
     app.use('/user', user);
     app.use('/source', source);
     app.use('/search', search);
     app.use('/call', lastCall);
+    
+    app.use('/reward', reward);
 }
