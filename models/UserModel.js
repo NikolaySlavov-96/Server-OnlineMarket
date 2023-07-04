@@ -31,7 +31,7 @@ userSchema.index({ email: 1 }, {
     }
 })
 
-const UserMode = model('User', userSchema);
+const UserModel = model('User', userSchema);
 
 
-module.exports = UserMode;
+module.exports = UserModel;

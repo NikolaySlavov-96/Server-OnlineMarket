@@ -1,7 +1,7 @@
-const Source = require("../models/SourceModel");
+const shortModel = require("../models/shortProdModel");
 
 const getSearchResult = async (query) => {
-    return await Source.find(query)
+    return await shortModel.find(query)
 }
 
 module.exports = {

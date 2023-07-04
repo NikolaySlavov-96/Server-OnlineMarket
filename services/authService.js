@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const JWT_Secret = process.env.JWT_SECRES;
 
-const UserMode = require("../models/userModel");
+const UserModel = require('../models/userModel');
 const BlackList = require('../models/backListModel');
 const activationModel = require('../models/activationModel');
 
@@ -14,17 +14,17 @@ const { sendFromNoReplyEmail } = require('./emailService');
 
 async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName) {
 
-    const existingEmail = await UserMode.findOne({ email }).collation({ locale: 'en', strength: 2 });
+    const existingEmail = await UserModel.findOne({ email }).collation({ locale: 'en', strength: 2 });
     if (existingEmail) {
         throw new Error('Email is taken');
     }
 
-    const existingTelephoneNumber = await UserMode.findOne({ telephone });
+    const existingTelephoneNumber = await UserModel.findOne({ telephone });
     if (existingTelephoneNumber) {
         throw new Error('Telephone Number is using');
     }
 
-    const userData = await UserMode.create({
+    const userData = await UserModel.create({
         email,
         imgUrl,
         password: await bcrypt.hash(password, 10),
@@ -52,7 +52,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
 
 async function login(email, password) {
 
-    const existingEmail = await UserMode.findOne({ email });
+    const existingEmail = await UserModel.findOne({ email });
 
     if (existingEmail.isDelete) {
         throw new Error('Profile is delete, contact with administrate');
@@ -110,7 +110,7 @@ async function activateAccount(userId, activateCode) {
 
     if (resultCode.sendCode == activateCode) {
         resultCode.dateUsing = createNewDate();
-        const userDate = await UserMode.findById(userId);
+        const userDate = await UserModel.findById(userId);
         userDate.isActivate = true;
         await resultCode.save();
         await userDate.save();
@@ -121,7 +121,7 @@ async function activateAccount(userId, activateCode) {
 }
 
 async function checkFieldInDB(date) {
-    const isUsing = await UserMode.findOne(date).count() > 0;
+    const isUsing = await UserModel.findOne(date).count() > 0;
     return isUsing;
 }
 

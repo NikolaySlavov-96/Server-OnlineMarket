@@ -7,6 +7,6 @@ const activateSchema = new Schema({
     dateUsing: { type: Date },
 });
 
-const activationModel = model('activation', activateSchema);
+const activationModel = model('Activation', activateSchema);
 
 module.exports = activationModel;

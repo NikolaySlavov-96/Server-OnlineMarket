@@ -1,13 +1,13 @@
-const UserMode = require("../models/UserModel");
+const UserModel = require("../models/userModel");
 const { createNewDate } = require("../util/dates");
 
 
 const getUserById = async (userId) => {
-    return await UserMode.findById(userId).find({ isDelete: false });
+    return await UserModel.findById(userId).find({ isDelete: false });
 }
 
 const editUserById = async (userId, data) => {
-    const editUser = await UserMode.findById(userId);
+    const editUser = await UserModel.findById(userId);
 
     editUser.imgUrl = data.imgUrl;
     editUser.password = data.password; // To Do verification password before change
@@ -22,7 +22,7 @@ const editUserById = async (userId, data) => {
 }
 
 const deleteUserById = async (userId) => {
-    const userDelete = await UserMode.findById(userId);
+    const userDelete = await UserModel.findById(userId);
     userDelete.lastUpdate = createNewDate();
     userDelete.isDelete = !userDelete.isDelete;
     return await userDelete.save();

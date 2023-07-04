@@ -4,6 +4,6 @@ const blackListSchema = new Schema({
     inActivateToken: { type: String, required: true }
 });
 
-const BlackList = model('blackList', blackListSchema);
+const BlackList = model('BlackList', blackListSchema);
 
 module.exports = BlackList;
