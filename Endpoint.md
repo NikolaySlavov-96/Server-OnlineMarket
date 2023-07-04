@@ -43,36 +43,51 @@
 
 3. Product Endpoint
 
-   - get All products GET --> /source/products
-   - get product for detail page GET --> /product/:idSource/comments
+   - get All products GET --> /product/products
+   - get product for detail page GET --> /product/category/:idSource/comments
 
-   - get one productus only edit GET --> /source/product/:idSource
+   - get one productus only edit GET --> /product/:category/:idSource
+      - first category --> technology
 
-   - create new product --> /source/product
+   - create new product --> /product/category
     {
-    // To Do
+      "coverImg": "",
+      "productName": "",
+      "category": "",
+      "subCategory": "",
+      "imgs": ["", ""],
+      "description": "",
+      "sizes": "",
+      "release": ""
     }
-   - edit product PUT --> /source/product/:idSource
+   - edit product PUT --> /product/:category/:idSource
     {
-    // To Do
+      "coverImg": "",
+      "productName": "",
+      "category": "",
+      "subCategory": "",
+      "imgs": ["", ""],
+      "description": "",
+      "sizes": "",
+      "release": ""
     }
-   - delete product DELETE --> /source/product/:idSource
+   - delete product DELETE --> /product/category/:idSource
 
 4. Commentar Endpoint
 
-   - get one commentar GET --> /product/:idSource/comment/:idComment
+   - get one commentar GET --> /product/category/:idSource/comment/:idComment
    - create new commentar POST --> /product/:idSource/comment
     {
     name,
     commentar,
     }
 
-   - edit commentar PUT --> /product/:idSource/comment/:idComment
+   - edit commentar PUT --> /product/category/:idSource/comment/:idComment
     {
     name,
     commentar
     }
-   - delete commentar DELETE --> /product/:idSource/comment/:idComment
+   - delete commentar DELETE --> /product/category/:idSource/comment/:idComment
 
 5. Search Endpoint
 
