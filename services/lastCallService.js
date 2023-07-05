@@ -1,5 +1,4 @@
 const lastCallModell = require("../models/lastCallModel");
-const messageModel = require("../models/messageCalls");
 const { createNewDate } = require("../util/dates");
 
 
@@ -7,10 +6,13 @@ const getCallsWithCustomer = async (userId, query) => {
     return lastCallModell.find({ userId }).sort(query.sortBy).limit(query.limit);
 };
 
-const createCallWithCustomer = async (userId, date) => {
+const createCallWithCustomer = async (userId, date, messages) => {
 
-    //To Do given description from DB not browser
     // const message = await messageModel.findById(date.idType);
+
+    // if(date.type === messages[type]) {
+
+    // }
 
     const createCalls = await lastCallModell.create({
         userId,
@@ -22,7 +24,7 @@ const createCallWithCustomer = async (userId, date) => {
     return createCalls;
 };
 
-const editCallWithCustomer = async (userId, callId) => {
+const editCallWithCustomer = async (userId, callId, messages) => {
 
     const oldDate = await lastCallModell.findById(callId);
     if (oldDate.userId.toString() !== userId.toString()) {
@@ -37,13 +39,8 @@ const editCallWithCustomer = async (userId, callId) => {
     await oldDate.save();
 };
 
-const allMessage = async () => {
-    return messageModel.find({});
-};
-
 module.exports = {
     getCallsWithCustomer,
     createCallWithCustomer,
     editCallWithCustomer,
-    allMessage,
 }

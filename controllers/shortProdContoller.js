@@ -10,7 +10,7 @@ const getAllSource = async (req, res) => {
     const limit = parseInt(req?.query?.limit) || 10;
     const skipSource = (page - 1) * limit;
     // To Do quesry for category or eth. serch catehory
-
+    // adding search and with productCode
     const query = { isDelete: false };
 
     const source = await getAll(query, limit, skipSource);

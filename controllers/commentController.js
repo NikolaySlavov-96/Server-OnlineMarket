@@ -9,10 +9,10 @@ const getCommentarsByIdProduct = async (req, res) => {
     const idSource = req.params.idSource;
 
     //To Do Implement with Promice All
-    const source = await getById(req.params.category, idSource).lean();
+    const source = await getById(req.params.category, idSource);
     const comments = await getAllComment(idSource);
 
-    const result = source.map(e => ({ ...e, comment: comments }))
+    const result = comments && ({ ...source, comment: comments })
 
     res.json(result);
 }
@@ -32,7 +32,7 @@ const createComments = async (req, res) => {
             throw errors;
         }
 
-        // code for chech whats letter and change isVisible to false or not
+        // code for chech whats letter and change isDelete to false or not
 
         const { _id, ownerId, name, commentar, createAt, } = await createCommentForProduct(req.params.idSource, req.user._id, req.body);
         res.json({ _id, ownerId, name, commentar, createAt, });

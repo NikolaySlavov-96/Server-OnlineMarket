@@ -51,6 +51,7 @@
 
    - create new product --> /product/category
     {
+      "productCode": Number,
       "coverImg": "", // adding in imgs 
       "productName": "",
       "category": "",
@@ -58,7 +59,9 @@
       "imgs": ["", ""],
       "description": "",
       "sizes": "",
-      "release": ""
+      "colors": "",
+      "release": "",
+      "buyPrice": "",
     }
    - edit product PUT --> /product/:category/:idSource
     {

@@ -17,16 +17,14 @@ const getAll = (query, limit, skipSource) => {
 }
 
 const getById = async (category, idSource) => {
-    const shortDate = await shortProduct.findOne({ productId: idSource }).lean();
-    const otherDate = await allProductCollection[category].findById(idSource).lean();
-
+    const shortDate = await shortProduct.findById(idSource).lean();
+    const otherDate = await allProductCollection[category].findOne({ shortId: idSource }).lean();
     const allDateOfDB = Object.assign({ ...shortDate }, otherDate);
 
     return allDateOfDB
 }
 
 const create = async (dataSource) => {
-    // always stay same
     const short = {};
     for (const key in dataSource) {
         if (obectOfKeys.shortProduct.includes(key)) {
@@ -53,14 +51,12 @@ const create = async (dataSource) => {
 const updateById = async (idSource, dataSource) => {
     const oldShortCategory = await shortProduct.findById(idSource);
     const oldSpecificCategory = await allProductCollection[dataSource.category].findOne({ shortId: idSource });
-    // always stay same
     for (const key in dataSource) {
         if (obectOfKeys.shortProduct.includes(key)) {
             oldShortCategory[key] = dataSource[key];
         }
     }
 
-    // To Do Adding object save all field in all collection
     for (const key in dataSource) {
         if (obectOfKeys[dataSource.category].includes(key)) {
             oldSpecificCategory[key] = dataSource[key];
