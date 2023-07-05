@@ -51,7 +51,7 @@
 
    - create new product --> /product/category
     {
-      "coverImg": "",
+      "coverImg": "", // adding in imgs 
       "productName": "",
       "category": "",
       "subCategory": "",
