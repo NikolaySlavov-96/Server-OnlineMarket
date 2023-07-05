@@ -43,8 +43,8 @@
 
 3. Product Endpoint
 
-   - get All products GET --> /product/products
-   - get product for detail page GET --> /product/category/:idSource/comments
+   - get All products GET --> /product/categories
+   - get product for detail page GET --> /product/:category/:idSource/comments
 
    - get one productus only edit GET --> /product/:category/:idSource
       - first category --> technology
@@ -76,7 +76,7 @@
 4. Commentar Endpoint
 
    - get one commentar GET --> /product/category/:idSource/comment/:idComment
-   - create new commentar POST --> /product/:idSource/comment
+   - create new commentar POST --> /product/category/:idSource/comment
     {
     name,
     commentar,

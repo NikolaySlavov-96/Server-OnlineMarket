@@ -60,7 +60,7 @@ shortProd.delete('/category/:idSource/comment/:idComment',
 
 
 // detail page
-shortProd.get('/category/:idSource/comments', commetController.getCommentarsByIdProduct);
+shortProd.get('/:category/:idSource/comments', commetController.getCommentarsByIdProduct);
 
 
 module.exports = shortProd;

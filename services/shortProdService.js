@@ -47,7 +47,6 @@ const create = async (dataSource) => {
     }
     const specificCategory = await allProductCollection[dataSource.category].create(value);
 
-    return dataSource;
     return shortCategory;
 }
 
