@@ -11,7 +11,7 @@ const allProductCollection = {
 
 const obectOfKeys = {
     'shortProduct': ['coverImg', 'productName', 'category', 'subCategory', 'release', 'mark', 'productCode'],
-    'technology': ['imgs', 'description', 'sizes','manufacture'],
+    'technology': ['imgs', 'description', 'sizes', 'manufacture'],
 }
 
 const getAll = (query, limit, skipSource) => {
@@ -32,24 +32,17 @@ const create = async (dataSource) => {
     const short = {
         price: createPrice._id,
     };
-    for (const key in dataSource) {
-        if (obectOfKeys.shortProduct.includes(key)) {
-            short[key] = dataSource[key];
-        }
-    }
-    const shortCategory = await shortProduct.create(short);
+    const dataShortCategory = changeFilds(short, dataSource, 'shortProduct');
+    const shortCategory = await shortProduct.create(dataShortCategory);
+
 
     const value = {
         shortId: shortCategory._id,
         createdAt: createNewDate(),
         lastUpdate: createNewDate(),
     }
-    for (const key in dataSource) {
-        if (obectOfKeys[dataSource.category].includes(key)) {
-            value[key] = dataSource[key]
-        }
-    }
-    const specificCategory = await allProductCollection[dataSource.category].create(value);
+    const dataSpecificCategory = changeFilds(value, dataSource, dataSource.category);
+    const specificCategory = await allProductCollection[dataSource.category].create(dataSpecificCategory);
 
     return shortCategory;
 }
@@ -57,21 +50,14 @@ const create = async (dataSource) => {
 const updateById = async (idSource, dataSource) => {
     const oldShortCategory = await shortProduct.findById(idSource);
     const oldSpecificCategory = await allProductCollection[dataSource.category].findOne({ shortId: idSource });
-    for (const key in dataSource) {
-        if (obectOfKeys.shortProduct.includes(key)) {
-            oldShortCategory[key] = dataSource[key];
-        }
-    }
 
-    for (const key in dataSource) {
-        if (obectOfKeys[dataSource.category].includes(key)) {
-            oldSpecificCategory[key] = dataSource[key];
-        }
-    }
-    oldSpecificCategory.lastUpdate = createNewDate();
+    const dataShortCategory = changeFilds(oldShortCategory, dataSource, 'shortProduct');
+    const dataSpecificCategory = changeFilds(oldSpecificCategory, dataSource, dataSource.category);
 
-    const shortCategory = await oldShortCategory.save();
-    const specificCategory = await oldSpecificCategory.save();
+    dataSpecificCategory.lastUpdate = createNewDate();
+
+    const shortCategory = await dataShortCategory.save();
+    const specificCategory = await dataSpecificCategory.save();
 
     return shortCategory;
 }
@@ -84,18 +70,14 @@ const deleteById = async (idSource) => {
     return oldData.save();
 }
 
-const changeFilds = () => {
+const changeFilds = (oldDate, dataSource, collection) => {
     for (const key in dataSource) {
-        if (obectOfKeys.shortProduct.includes(key)) {
-            oldShortCategory[key] = dataSource[key];
+        if (obectOfKeys[collection].includes(key)) {
+            oldDate[key] = dataSource[key];
         }
     }
 
-    for (const key in dataSource) {
-        if (obectOfKeys[dataSource.category].includes(key)) {
-            oldSpecificCategory[key] = dataSource[key];
-        }
-    }
+    return oldDate
 }
 
 module.exports = {
