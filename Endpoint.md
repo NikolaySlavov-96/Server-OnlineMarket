@@ -111,14 +111,12 @@
    - post calls for customer talks POST --> /call/user/:userId
    {
       idType
-      type
-      description
+      extDescription --> optional at code 999
    }
    - edit calls for customer talks PUT --> /call/user/:userId?callsId={callsId}
    {
       idType
-      type
-      description
+      extDescription --> optional at code 999
    }
    - get all Messages for theme talks GET --> /call/messages
 
