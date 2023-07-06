@@ -50,7 +50,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
     return createTokent(userData);
 }
 
-async function login(email, password) {
+async function login(email, password, stayLogin) {
 
     const existingEmail = await UserModel.findOne({ email });
 
@@ -68,7 +68,7 @@ async function login(email, password) {
         throw new Error('Username or Password is not valit')
     }
 
-    return createTokent(existingEmail)
+    return createTokent(existingEmail, stayLogin)
 }
 
 async function logout(token) {
@@ -78,12 +78,17 @@ async function logout(token) {
     return request;
 }
 
-function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivate }) {
+function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivate }, stayLogin) {
     const payload = {
         _id,
         email,
         firstName,
         role,
+    }
+
+    let expire = '12h'
+    if (stayLogin) {
+        expire = '29d'
     }
 
     return {
@@ -93,7 +98,7 @@ function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivat
         lastName,
         role,
         isActivate,
-        accessToken: jwt.sign(payload, JWT_Secret),
+        accessToken: jwt.sign(payload, JWT_Secret, { expiresIn: expire }),
     }
 }
 

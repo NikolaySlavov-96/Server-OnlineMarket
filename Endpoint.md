@@ -19,6 +19,7 @@
     {
     email,
     password,
+    stayLogin --> check square
     }
    - Logging out POST --> /auth/logout
     {
