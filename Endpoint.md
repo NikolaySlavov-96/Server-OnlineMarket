@@ -52,27 +52,36 @@
    - create new product --> /product/category
     {
       "productCode": Number,
-      "coverImg": "", // adding in imgs 
+      "coverImg": "", // adding in imgs
+      "mark": "",
       "productName": "",
       "category": "",
       "subCategory": "",
       "imgs": ["", ""],
       "description": "",
-      "sizes": "",
-      "colors": "",
+      "manufacture": "",
+      "sizes": "", ?
+      "colors": "", ?
       "release": "",
       "buyPrice": "",
+      "quantity": NumberproductCode
     }
    - edit product PUT --> /product/:category/:idSource
     {
-      "coverImg": "",
+      "productCode": Number,
+      "coverImg": "", // adding in imgs
+      "mark": "",
       "productName": "",
       "category": "",
       "subCategory": "",
       "imgs": ["", ""],
       "description": "",
-      "sizes": "",
-      "release": ""
+      "manufacture": "",
+      "sizes": "", ?
+      "colors": "", ?
+      "release": "",
+      "buyPrice": "",
+      "quantity": NumberproductCode
     }
    - delete product DELETE --> /product/category/:idSource
 
