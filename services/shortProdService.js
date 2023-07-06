@@ -33,7 +33,7 @@ const create = async (dataSource) => {
     const short = {
         price: createPrice._id,
     };
-    const dataShortCategory = changeFilds(short, dataSource, 'shortProduct');
+    const dataShortCategory = changeFilds(obectOfKeys, short, dataSource, 'shortProduct');
     const shortCategory = await shortProduct.create(dataShortCategory);
 
 
@@ -42,7 +42,7 @@ const create = async (dataSource) => {
         createdAt: createNewDate(),
         lastUpdate: createNewDate(),
     }
-    const dataSpecificCategory = changeFilds(value, dataSource, dataSource.category);
+    const dataSpecificCategory = changeFilds(obectOfKeys, value, dataSource, dataSource.category);
     const specificCategory = await allProductCollection[dataSource.category].create(dataSpecificCategory);
 
     return shortCategory;
@@ -52,8 +52,8 @@ const updateById = async (idSource, dataSource) => {
     const oldShortCategory = await shortProduct.findById(idSource);
     const oldSpecificCategory = await allProductCollection[dataSource.category].findOne({ shortId: idSource });
 
-    const dataShortCategory = changeFilds(oldShortCategory, dataSource, 'shortProduct');
-    const dataSpecificCategory = changeFilds(oldSpecificCategory, dataSource, dataSource.category);
+    const dataShortCategory = changeFilds(obectOfKeys, oldShortCategory, dataSource, 'shortProduct');
+    const dataSpecificCategory = changeFilds(obectOfKeys, oldSpecificCategory, dataSource, dataSource.category);
 
     dataSpecificCategory.lastUpdate = createNewDate();
 

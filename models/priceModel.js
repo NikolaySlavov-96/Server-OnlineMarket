@@ -8,6 +8,6 @@ const priceSchema = new Schema({
     discountPurcent: { type: Number, default: 0 }
 });
 
-const PriceModel = model('price', priceSchema);
+const PriceModel = model('Price', priceSchema);
 
 module.exports = PriceModel;
