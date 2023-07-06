@@ -9,6 +9,16 @@ const createPriceWithProduct = async (dataSource) => {
     });
 }
 
+const updatePriceWithProduct = async (id, dataSource) => {
+    const prices = await PriceModel.findById(id);
+    prices.buyPrice = dataSource.buyPrice;
+    prices.quantity = dataSource.quantity;
+    prices.sellPrice = calculatePrice(dataSource.buyPrice, '200');
+
+    return await prices.save();
+}
+
 module.exports = {
     createPriceWithProduct,
+    updatePriceWithProduct,
 }

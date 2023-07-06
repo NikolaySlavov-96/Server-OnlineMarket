@@ -1,9 +1,10 @@
 const shortProduct = require("../models/shortProdModel");
 const TechnologyModel = require("../models/products/technologyModel");
 
+const { createPriceWithProduct, updatePriceWithProduct } = require("./priceService");
+
 const { createNewDate } = require("../util/dates");
-const PriceModel = require("../models/priceModel");
-const { createPriceWithProduct } = require("./priceService");
+const { changeFilds } = require("../util/changeFilds");
 
 const allProductCollection = {
     'technology': TechnologyModel
@@ -56,6 +57,7 @@ const updateById = async (idSource, dataSource) => {
 
     dataSpecificCategory.lastUpdate = createNewDate();
 
+    await updatePriceWithProduct(oldShortCategory.price, dataSource);
     const shortCategory = await dataShortCategory.save();
     const specificCategory = await dataSpecificCategory.save();
 
@@ -68,16 +70,6 @@ const deleteById = async (idSource) => {
     oldData.isDelete = !oldData.isDelete;
 
     return oldData.save();
-}
-
-const changeFilds = (oldDate, dataSource, collection) => {
-    for (const key in dataSource) {
-        if (obectOfKeys[collection].includes(key)) {
-            oldDate[key] = dataSource[key];
-        }
-    }
-
-    return oldDate
 }
 
 module.exports = {
