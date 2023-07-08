@@ -9,7 +9,7 @@ const congratulationForBirthday = ({ firstName, lastName, code }) => {
         href="https://www.shop-hop.store/shoping?rewardcode=${code}">Adding Code</a>
     <p>At problem visit <span style="color:blue;font-size: 18px;">https://www.shop-hop.store/shoping</span> and
         insert code:
-        <span style="font-size: 22px;">${activateCodel}</span>
+        <span style="font-size: 22px;">${code}</span>
     </p>
 </div>`
 }
