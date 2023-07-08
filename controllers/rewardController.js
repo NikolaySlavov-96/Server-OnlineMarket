@@ -29,7 +29,7 @@ setInterval(() => {
     setInterval(() => {
         sendBirthdayWish()
     }, 600000); //--> 10 minutes after first
-}, 10000);
+}, dayToMilisecond);
 
 const sendRewardForBirthday = async () => {
     birthday(0, 'Happy Birthday after 3 days', 'sendGiftForBirthdat');
