@@ -6,20 +6,20 @@
 
    - register POST --> /auth/register
     {
-    email: required,
-    imgUrl: notRequred,
-    password: required,
-    rePassword: required,
-    telephone: required,
-    birthday: required, format(22/22/2222),
-    firstName: required,
-    middleName: notRequired,
-    lastName: required,
+    "email": "required",
+    "imgUrl": "notRequred",
+    "password": "required",
+    "rePassword": "required",
+    "telephone": "required",
+    "birthday": "required", format(22/22/2222),
+    "firstName": "required",
+    "middleName": "notRequired",
+    "lastName": "required",
     }
    - login POST --> /auth//login
     {
-    email,
-    password,
+    "email",
+    "password",
     stayLogin --> check square
     }
    - Logging out POST --> /auth/logout
