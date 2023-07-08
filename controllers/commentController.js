@@ -1,7 +1,6 @@
 const { validationResult } = require('express-validator');
 
 const { getAllComment, createCommentForProduct, editCommentById, deleteCommentById, getCommentById } = require("../services/commentService");
-const { getById } = require('../services/shortProdService');
 const { errorParser } = require('../util/parser');
 
 
@@ -50,7 +49,8 @@ const editCommentByIdComment = async (req, res) => {
         const { _id, ownerId, name, commentar, isDelete, } = await editCommentById(idComment, req.body);
         res.json({ _id, ownerId, name, commentar, isDelete, });
     } catch (err) {
-
+        const message = errorParser(err);
+        res.status(401).json({ message });
     }
 }
 
