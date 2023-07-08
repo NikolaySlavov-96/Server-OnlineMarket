@@ -46,17 +46,25 @@ const addingPartnerCode = async (req, res) => {
 
 const dayToMilisecond = milisecondsOfDays();
 setInterval(() => {
-    birthday(2, 'Happy Birthday after 2 days', 'sendGiftForBirthdat');
+    sendGiftForBirthdat();
     setInterval(() => {
-        birthday(0, 'Today your Birthday', 'congratulationForBirthday');
+        congratulationForBirthday();
     }, 600000); //--> 10 minutes after first
 }, dayToMilisecond);
 
+const sendGiftForBirthdat = async () => {
+    const promocode = generateCode();
+    const array = birthday(2, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', promocode);
+    await saveCodeUsers(promocode, 'Happy Byrhday Code', array);
+}
 
-const birthday = async (time, message, template) => {
+const congratulationForBirthday = async () => {
+    birthday(0, 'Today your Birthday', 'congratulationForBirthday');
+}
+
+const birthday = async (time, message, template, promocode) => {
     const date = createDateForBirthday(time);
 
-    const promocode = generateCode();
     const sendedCode = [];
     const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
     allBirthdays.map(e => {
@@ -68,7 +76,10 @@ const birthday = async (time, message, template) => {
         e = { ...e._doc, code: promocode }
         sendFromNoReplyEmail(e.email, message, template, e);
     });
-    await saveCodeUsers(promocode, 'Happy Byrhday Code', sendedCode);
+
+    if (promocode) {
+        return sendedCode;
+    }
 }
 
 
