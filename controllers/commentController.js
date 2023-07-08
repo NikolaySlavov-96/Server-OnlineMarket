@@ -39,14 +39,11 @@ const editCommentByIdComment = async (req, res) => {
 
     try {
         const { errors } = validationResult(req);
-
         if (errors.length > 0) {
             throw errors;
         }
-
-        const idComment = req.params.idComment;
-
-        const { _id, ownerId, name, commentar, isDelete, } = await editCommentById(idComment, req.body);
+        
+        const { _id, ownerId, name, commentar, isDelete, } = await editCommentById(req.params.idComment, req.body);
         res.json({ _id, ownerId, name, commentar, isDelete, });
     } catch (err) {
         const message = errorParser(err);

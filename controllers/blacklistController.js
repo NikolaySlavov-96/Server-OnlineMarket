@@ -9,27 +9,33 @@ const typeCodes = {
 }
 
 const getBlackList = async (req, res) => {
-    console.log('getBlacklist');
-    const blackList = await getAllBlacklists();
-    res.json(blackList);
+    try {
+        const blackList = await getAllBlacklists();
+        res.json(blackList);
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
 };
 
 const getOneBlacklist = async (req, res) => {
-    const { userId, commentId, description, date, type, isDeleted } = await getPersonalBlacklist(req.params.userId);
-    res.json({ userId, commentId, description, date, type, isDeleted });
+    try {
+        const response = await getPersonalBlacklist(req.params.userId);
+        res.json(response);
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
 }
 
 const addToBlackList = async (req, res) => {
     const typeCode = req.body.type;
     try {
-        if(!typeCodes[typeCode]){
+        if (!typeCodes[typeCode]) {
             throw new Error('type code non existing');
         }
-
-        const { userId, commentId, description, date, type } = req.body;
-        const result = await addPersonToBlacklist({ userId, commentId, description, date, type });
+        const result = await addPersonToBlacklist(req.body, typeCodes[typeCode]);
         res.json(result);
-
     } catch (error) {
         const message = errorParser(error);
         res.status(401).json({ message });
@@ -41,7 +47,7 @@ const removeFromBlackList = async (req, res) => {
     res.json(blackList);
 };
 
-const getAllCodes = async(req, res) => {
+const getAllCodes = async (req, res) => {
     res.json(typeCodes);
 };
 

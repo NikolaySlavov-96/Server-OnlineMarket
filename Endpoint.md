@@ -129,7 +129,6 @@
          "userId": ":userId",
          "commentId": ":commentId",
          "description": "Example message",
-         "date": "12/12/2022",
          "type": "010" //see typeCodes inside blacklistController
       }
    - remove person from blacklist DELETE --> /blacklist/:userId
