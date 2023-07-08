@@ -5,7 +5,6 @@ const getWheelReward = async() => {
     const randomNumber = Math.random();
     let reward = '';
     
-
     if(rewardsArray.length == 0 || randomNumber > 0.05){ // 95% for promocode 
         reward = generateCode();
     } else{
@@ -19,7 +18,3 @@ const getWheelReward = async() => {
 module.exports = {
     getWheelReward,
 }
-
-
-
-    // const rewards = rewardsSerice.getAll(); // Array of available rewards

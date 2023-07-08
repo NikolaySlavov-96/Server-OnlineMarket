@@ -4,6 +4,7 @@ const role = {
     'createCommentar': ['customer'],
     'callWithCustomer': ['seller', 'marketing', 'manager', 'admin'],
     'editCallWithCustomer': ['manager', 'admin'],
+    'forBlackList': ['manager, admin'],
 }
 
 module.exports = {

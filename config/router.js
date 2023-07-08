@@ -5,6 +5,7 @@ const search = require("../routes/search");
 const lastCall = require("../routes/lastCall");
 
 const reward = require("../routes/reward");
+const blacklist = require("../routes/blacklist");
 
 module.exports = (app) => {
     app.use('/auth', auth);
@@ -14,4 +15,5 @@ module.exports = (app) => {
     app.use('/call', lastCall);
     
     app.use('/reward', reward);
+    app.use('/blacklist', blacklist);
 }

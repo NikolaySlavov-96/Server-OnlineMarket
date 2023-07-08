@@ -5,10 +5,6 @@ const { errorParser } = require("../util/parser");
 
 const getRewardWheel = async (req, res) => {
     try {
-        if(!req.body.email){
-            throw new Error('Missing email');
-        };
-        
         const reward = await getWheelReward()
         res.status(200).json(reward);
     } catch (err) {
