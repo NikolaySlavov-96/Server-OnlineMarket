@@ -5,15 +5,16 @@ function createNewDate() {
 
 function milisecondsOfDays() {
     const currentMoment = createNewDate();
-    let minets = currentMoment.getMinutes();
-    let hours = currentMoment.getHours();
+    const minets = currentMoment.getMinutes();
+    const hours = currentMoment.getHours();
+    let currentH = 24;
     let result = 0;
 
     if (minets > 0 && minets < 60) {
-        hours += 1;
-        result = (minets + 20) * 60 * 1000;
+        currentH -= 1;
+        result = ((60 - minets) + 10) * 60 * 1000;
     }
-    const dayToMilisecond = (24 - hours) * 60 * 60 * 1000 + result;
+    const dayToMilisecond = (currentH - hours) * 60 * 60 * 1000 + result;
     return dayToMilisecond
 };
 
