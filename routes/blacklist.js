@@ -28,7 +28,13 @@ blacklist.delete('/:userId',
     hasUser(),
     hasRole(role.forBlackList),
     blacklistController.removeFromBlackList
-)
+);
+
+blacklist.get('/codes',
+    hasUser(),
+    hasRole(role.forBlackList),
+    blacklistController.getAllCodes
+);
 
 
 

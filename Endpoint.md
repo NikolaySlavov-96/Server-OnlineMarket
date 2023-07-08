@@ -129,9 +129,10 @@
          "commentId": ":commentId",
          "description": "Example message",
          "date": "12/12/2022",
-         "type": "112"
+         "type": "010" //see typeCodes inside blacklistController
       }
    - remove person from blacklist DELETE --> /blacklist/:userId
+   - get all typeCodes GET --> /blaclist/codes
 
 ## Front End endpoints
 
