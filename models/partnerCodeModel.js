@@ -1,6 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const partnerCodeSchema = new Schema({
+    promocode: { type: String, required: true, },
     howUsing: { type: Number, required: true, default: 0 },
     createAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
