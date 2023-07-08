@@ -120,6 +120,19 @@
    }
    - get all Messages for theme talks GET --> /call/messages
 
+   7. Blacklist 
+   - get all blacklists GET --> /blacklist
+   - get personal blacklist GET --> /blacklist/:userId
+   - add person to blacklist POST--> /blacklist
+      {
+         "userId": ":userId",
+         "commentId": ":commentId",
+         "description": "Example message",
+         "date": "12/12/2022",
+         "type": "112"
+      }
+   - remove person from blacklist DELETE --> /blacklist/:userId
+
 ## Front End endpoints
 
 1. activation account --> adding in register Email form
