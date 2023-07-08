@@ -1,5 +1,5 @@
 
-// To Do adding complete design 
+// To Do adding complete design and edit link after complete FrontEnd
 const registerTemplate = ({ userId, activateCodel }) => {
     return `<h1 style='color:blue;font-size:45px'>Register</h1> 
     <p>https://www.shop-hop.store/activate?${userId}&${activateCodel}</p>
