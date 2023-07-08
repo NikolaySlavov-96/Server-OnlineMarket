@@ -37,6 +37,8 @@ shortProd.delete('/category/:idSource',
 
 
 //comment
+shortProd.get('/category/:idSource/comments', commetController.getCommentarsByIdProduct);
+
 shortProd.get('/category/:idSource/comment/:idComment', commetController.getCommentByIdComment);
 
 shortProd.post('/category/:idSource/comment',
@@ -57,10 +59,5 @@ shortProd.delete('/category/:idSource/comment/:idComment',
     hasUser(),
     hasRole(role.forCommentars),
     commetController.deleteCommentByIdComment);
-
-
-// detail page
-shortProd.get('/:category/:idSource/comments', commetController.getCommentarsByIdProduct);
-
 
 module.exports = shortProd;

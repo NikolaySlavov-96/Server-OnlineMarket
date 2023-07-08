@@ -44,10 +44,8 @@
 
 3. Product Endpoint
 
-   - get All products GET --> /product/categories
-   - get product for detail page GET --> /product/:category/:idSource/comments
-
-   - get one productus only edit GET --> /product/:category/:idSource
+   - get All products GET --> /product/categories --> // catalog page
+   - get one product GET --> /product/:category/:idSource --> detail page
       - first category --> technology
 
    - create new product --> /product/category
@@ -87,6 +85,8 @@
    - delete product DELETE --> /product/category/:idSource
 
 4. Commentar Endpoint
+
+   - get commentars for detail page page GET --> /product/category/:idSource/comments
 
    - get one commentar GET --> /product/category/:idSource/comment/:idComment
    - create new commentar POST --> /product/category/:idSource/comment

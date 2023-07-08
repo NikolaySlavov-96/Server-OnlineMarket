@@ -6,15 +6,8 @@ const { errorParser } = require('../util/parser');
 
 
 const getCommentarsByIdProduct = async (req, res) => {
-    const idSource = req.params.idSource;
-
-    //To Do Implement with Promice All
-    const source = await getById(req.params.category, idSource);
-    const comments = await getAllComment(idSource);
-
-    const result = comments && ({ ...source, comment: comments })
-
-    res.json(result);
+    const comments = await getAllComment(req.params.idSource);
+    res.json(comments);
 }
 
 const getCommentByIdComment = async (req, res) => {
