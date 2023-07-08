@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-const { getWheelReward, getBirthdays, saveCodeUsers } = require("../services/rewardService");
+const { getWheelReward, getBirthdays, saveCodeUsers, getRewarCode, createPartnerCode } = require("../services/rewardService");
 const { milisecondsOfDays, createDateForBirthday } = require('../util/dates');
 const { generateCode } = require('../util/generatePromocode');
 const { errorParser } = require("../util/parser");
@@ -19,9 +19,30 @@ const getRewardWheel = async (req, res) => {
         res.status(200).json(reward);
     } catch (err) {
         const message = errorParser(err);
-        res.status(401).json(message); //TO DO Change status
+        res.status(401).json({ message }); //TO DO Change status
     }
 };
+
+const verifyRewardCode = async (req, res) => {
+    try {
+        console.log(req.query)
+        const code = await getRewarCode(req.query.promocode);
+        res.json(code);
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
+}
+
+const addingPartnerCode = async (req, res) => {
+    try {
+        const code = await createPartnerCode(req.query.partnercode);
+        res.json(code);
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
+}
 
 const dayToMilisecond = milisecondsOfDays();
 setInterval(() => {
@@ -37,7 +58,7 @@ const birthday = async (time, message, template) => {
 
     const promocode = generateCode();
     const sendedCode = [];
-    const allBirthdays = (await getBirthdays(`${date.day}/${date.month}`));
+    const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
     allBirthdays.map(e => {
         // To Do happy anniversary
         // const userYear = e.birthday.split('/')[2]
@@ -53,4 +74,6 @@ const birthday = async (time, message, template) => {
 
 module.exports = {
     getRewardWheel,
+    verifyRewardCode,
+    addingPartnerCode,
 }

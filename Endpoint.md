@@ -121,7 +121,7 @@
    }
    - get all Messages for theme talks GET --> /call/messages
 
-   7. Blacklist 
+7. Blacklist
    - get all blacklists GET --> /blacklist
    - get personal blacklist GET --> /blacklist/:userId
    - add person to blacklist POST--> /blacklist
@@ -134,6 +134,11 @@
       }
    - remove person from blacklist DELETE --> /blacklist/:userId
    - get all typeCodes GET --> /blaclist/codes
+
+8. reward
+   - get using reward code GET --> /reward/code?promocode={promocode} --> return true or false
+
+   - create partner code GET --> /reward/adding?partnercode={partnercode} --> return code
 
 ## Front End endpoints
 

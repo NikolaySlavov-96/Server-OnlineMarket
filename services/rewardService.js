@@ -1,5 +1,6 @@
 const UserModel = require("../models/userModel");
 const rewardCodeModel = require("../models/rewartCodeModel");
+const partnerCodeModel = require("../models/partnerCodeModel");
 
 const { createNewDate } = require("../util/dates");
 const { generateCode } = require("../util/generatePromocode");
@@ -30,10 +31,27 @@ const saveCodeUsers = async (promocode, description, sendedCode) => {
         lastUpdate: createNewDate(),
         createAt: createNewDate(),
     });
-}
+};
+
+const getRewarCode = async (promocode) => {
+    const rewardCode = await rewardCodeModel.find({ promocode }).find({ isExpired: false }).count() > 0;
+    const partnerCode = !rewardCode && await partnerCodeModel.find({ promocode }).find({ isDelete: false }).count() > 0;
+
+    return rewardCode || partnerCode;
+};
+
+const createPartnerCode = async (promocode) => {
+    return await partnerCodeModel.create({
+        promocode,
+        createAt: createNewDate(),
+        lastUpdate: createNewDate(),
+    });
+};
 
 module.exports = {
     getWheelReward,
     getBirthdays,
     saveCodeUsers,
+    getRewarCode,
+    createPartnerCode,
 }
