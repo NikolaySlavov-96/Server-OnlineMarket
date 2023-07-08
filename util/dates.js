@@ -21,9 +21,8 @@ function milisecondsOfDays() {
 function createDateForBirthday(optionDate) {
     const currentDate = createNewDate();
     const getYear = currentDate.getFullYear();
-    const getMonth = currentDate.getMonth();
+    let getMonth = (currentDate.getMonth() + 1);
     const getDay = currentDate.getDate()
-
     let month = getMonth.toString().length == 1 ? '0' + getMonth : getMonth;
     let dayPlus = optionDate ? (Number(getDay) + Number(optionDate)) : getDay;
     let day = dayPlus.toString().length == 1 ? '0' + dayPlus : dayPlus;

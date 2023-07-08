@@ -1,8 +1,9 @@
 const { model, Schema, Types: { ObjectId } } = require('mongoose');
 
 const rewardCodeSchema = new Schema({
-    promocode: { type: Number, required: true, default: 0 },
+    promocode: { type: String, required: true },
     description: { type: String, required: true },
+    sendedCode: { type: [ObjectId], required: true, default: [] },
     whichUsing: { type: [ObjectId], required: true, default: [] },
     createAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
@@ -10,6 +11,6 @@ const rewardCodeSchema = new Schema({
     isDelete: { type: Boolean, required: true, default: false }, // mark after 355 days
 });
 
-const rewardCodeModel = model('PartnerCode', rewardCodeSchema);
+const rewardCodeModel = model('RewardCode', rewardCodeSchema);
 
 module.exports = rewardCodeModel;
