@@ -1,16 +1,16 @@
-const Comment = require("../models/commentarModel");
+const CommentModel = require("../models/commentarModel");
 const { createNewDate } = require("../util/dates");
 
 const getAllComment = (idProduct) => {
-    return Comment.find({ productId: idProduct }).find({ isDelete: false });
+    return CommentModel.find({ productId: idProduct }).find({ isDelete: false });
 }
 
 const getCommentById = (idComment) => {
-    return Comment.findById(idComment).find({ isDelete: false });
+    return CommentModel.findById(idComment).find({ isDelete: false });
 }
 
 const createCommentForProduct = async (idProduct, owner, dataComment) => {
-    const createComment = await Comment.create({
+    const createComment = await CommentModel.create({
         productId: idProduct,
         ownerId: owner,
         name: dataComment.name,
@@ -22,7 +22,7 @@ const createCommentForProduct = async (idProduct, owner, dataComment) => {
 }
 
 const editCommentById = async (idComment, newDate) => {
-    const commentInfo = await Comment.findById(idComment);
+    const commentInfo = await CommentModel.findById(idComment);
 
     commentInfo.name = newDate.name;
     commentInfo.commentar = newDate.commentar;
@@ -32,7 +32,7 @@ const editCommentById = async (idComment, newDate) => {
 }
 
 const deleteCommentById = async (idComment) => {
-    const commentInfor = await Comment.findById(idComment);
+    const commentInfor = await CommentModel.findById(idComment);
 
     commentInfor.lastUpdate = createNewDate();
     commentInfor.isDelete = !commentInfor.isDelete;

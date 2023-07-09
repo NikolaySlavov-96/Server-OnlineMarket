@@ -10,6 +10,6 @@ const commentarSchema = new Schema({
     isDelete: { type: Boolean, default: false },
 });
 
-const Comment = model('Comment', commentarSchema);
+const CommentModel = model('Comment', commentarSchema);
 
-module.exports = Comment;
+module.exports = CommentModel;

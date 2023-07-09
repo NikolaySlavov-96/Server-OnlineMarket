@@ -2,7 +2,7 @@ const lastCall = require('express').Router();
 
 const callController = require('../controllers/lastCallController');
 const { hasRole } = require('../middlewares/guards');
-const { role } = require('./role');
+const role = require('./role');
 
 
 lastCall.get('/user/:userId',

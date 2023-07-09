@@ -4,7 +4,7 @@ const { body } = require('express-validator');
 const sourceConteroller = require('../controllers/shortProdContoller')
 const commetController = require('../controllers/commentController');
 const { hasUser, hasRole } = require('../middlewares/guards');
-const { role } = require('./role');
+const role = require('./role');
 
 
 shortProd.get('/categories', sourceConteroller.getAllSource); //All products

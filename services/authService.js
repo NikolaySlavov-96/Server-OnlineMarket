@@ -6,8 +6,8 @@ require('dotenv').config();
 const JWT_Secret = process.env.JWT_SECRES;
 
 const UserModel = require('../models/userModel');
-const BlackList = require('../models/backListModel');
-const activationModel = require('../models/activationModel');
+const BlacklistUserModel = require('../models/BlackListUserModel');
+const ActivationModel = require('../models/activationModel');
 
 const { createNewDate } = require('../util/dates');
 const { sendFromNoReplyEmail } = require('./emailService');
@@ -39,7 +39,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
 
     const activateCodel = uuid.v4().slice(0, 7);
     const userId = userData._id;
-    await activationModel.create({
+    await ActivationModel.create({
         userId: userId,
         sendCode: activateCodel,
         dateSend: createNewDate(),
@@ -72,7 +72,7 @@ async function login(email, password, stayLogin) {
 }
 
 async function logout(token) {
-    const request = await BlackList.create({
+    const request = await BlackListTokenModel.create({
         inActivateToken: token,
     });
     return request;
@@ -103,7 +103,7 @@ function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivat
 }
 
 async function verificationToken(token) {
-    const existingToken = await BlackList.findOne({ inActivateToken: token });
+    const existingToken = await BlackListTokenModel.findOne({ inActivateToken: token });
     if (existingToken) {
         throw new Error('Expected Token');
     }
@@ -111,7 +111,7 @@ async function verificationToken(token) {
 }
 
 async function activateAccount(userId, activateCode) {
-    const resultCode = await activationModel.findOne({ userId });
+    const resultCode = await ActivationModel.findOne({ userId });
 
     if (resultCode.sendCode == activateCode) {
         resultCode.dateUsing = createNewDate();

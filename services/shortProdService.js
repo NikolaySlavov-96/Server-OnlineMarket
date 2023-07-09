@@ -1,4 +1,4 @@
-const shortProduct = require("../models/shortProdModel");
+const ShortProduct = require("../models/shortProdModel");
 const TechnologyModel = require("../models/products/technologyModel");
 
 const { createPriceWithProduct, updatePriceWithProduct } = require("./priceService");
@@ -16,11 +16,11 @@ const obectOfKeys = {
 }
 
 const getAll = (query, limit, skipSource) => {
-    return shortProduct.find(query).limit(limit).skip(skipSource).populate({ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] });
+    return ShortProduct.find(query).limit(limit).skip(skipSource).populate({ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] });
 }
 
 const getById = async (category, idSource) => {
-    const shortDate = await shortProduct.findById(idSource).populate({ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }).lean();
+    const shortDate = await ShortProduct.findById(idSource).populate({ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }).lean();
     const otherDate = await allProductCollection[category].findOne({ shortId: idSource }).lean();
     const allDateOfDB = Object.assign({ ...shortDate }, otherDate);
 
@@ -34,7 +34,7 @@ const create = async (dataSource) => {
         price: createPrice._id,
     };
     const dataShortCategory = changeFilds(obectOfKeys, short, dataSource, 'shortProduct');
-    const shortCategory = await shortProduct.create(dataShortCategory);
+    const shortCategory = await ShortProduct.create(dataShortCategory);
 
 
     const value = {
@@ -49,7 +49,7 @@ const create = async (dataSource) => {
 }
 
 const updateById = async (idSource, dataSource) => {
-    const oldShortCategory = await shortProduct.findById(idSource);
+    const oldShortCategory = await ShortProduct.findById(idSource);
     const oldSpecificCategory = await allProductCollection[dataSource.category].findOne({ shortId: idSource });
 
     const dataShortCategory = changeFilds(obectOfKeys, oldShortCategory, dataSource, 'shortProduct');
@@ -65,7 +65,7 @@ const updateById = async (idSource, dataSource) => {
 }
 
 const deleteById = async (idSource) => {
-    const oldData = await shortProduct.findOne({ productId: idSource });
+    const oldData = await ShortProduct.findOne({ productId: idSource });
 
     oldData.isDelete = !oldData.isDelete;
 

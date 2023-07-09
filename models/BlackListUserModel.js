@@ -10,6 +10,6 @@ const blacklistUserSchema = new Schema({
     isDeleted: { type: Boolean, default: false }
 });
 
-const blacklistUserModel = model('BlackListUser', blacklistUserSchema);
+const BlacklistUserModel = model('BlackListUser', blacklistUserSchema);
 
-module.exports = blacklistUserModel;
+module.exports = BlacklistUserModel;

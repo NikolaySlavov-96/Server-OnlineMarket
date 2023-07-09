@@ -1,18 +1,18 @@
-const blacklistUserModel = require('../models/BlackListUserModel');
+const BlacklistUserModel = require('../models/blackListUserModel');
 const { createNewDate } = require('../util/dates');
 
 const getAllBlacklists = async () => {
-    return await blacklistUserModel.find({ isDeleted: false });
+    return await BlacklistUserModel.find({ isDeleted: false });
 };
 
 const getPersonalBlacklist = async (userId) => {
-    return await blacklistUserModel.findOne({ userId });
+    return await BlacklistUserModel.findOne({ userId });
 };
 
 const addPersonToBlacklist = async (body, message) => {
-    const isExsisting = await blacklistUserModel.findOne({ userId: body.userId });
+    const isExsisting = await BlacklistUserModel.findOne({ userId: body.userId });
     if(!isExsisting) {
-        return await blacklistUserModel.create({
+        return await BlacklistUserModel.create({
             userId: body.userId,
             commentId: body.commentId,
             type: body.type,
@@ -30,7 +30,7 @@ const addPersonToBlacklist = async (body, message) => {
 };
 
 const removePersonPromBlacklist = async (userId) => {
-    const blacklistedUser = await blacklistUserModel.findOne({ userId });
+    const blacklistedUser = await BlacklistUserModel.findOne({ userId });
     blacklistedUser.isDeleted = true;
     return await blacklistedUser.save();
 };

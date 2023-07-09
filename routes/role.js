@@ -8,6 +8,4 @@ const role = {
     'createPartner': ['admin'],
 }
 
-module.exports = {
-    role,
-}
+module.exports = role;

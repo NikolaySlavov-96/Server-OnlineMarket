@@ -3,7 +3,7 @@ const { body, query } = require('express-validator');
 
 const rewardController = require('../controllers/rewardController');
 const { hasUser, hasRole } = require('../middlewares/guards');
-const { role } = require('./role');
+const role = require('./role');
 
 reward.get('/wheel',
     // body('email').isEmail().withMessage('Missing email'),
