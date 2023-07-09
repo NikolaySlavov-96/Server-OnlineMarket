@@ -54,7 +54,7 @@ setInterval(() => {
 
 const sendGiftForBirthdat = async () => {
     const promocode = generateCode();
-    const array = birthday(2, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', promocode);
+    const array = await birthday(2, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', promocode);
     await saveCodeUsers(promocode, 'Happy Byrhday Code', array);
 }
 
