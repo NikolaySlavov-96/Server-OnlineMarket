@@ -1,5 +1,7 @@
-const CommentModel = require("../models/commentarModel");
+const CommentModel = require("../models/CommentarModel");
+
 const { createNewDate } = require("../util/dates");
+
 
 const getAllComment = (idProduct) => {
     return CommentModel.find({ productId: idProduct }).find({ isDelete: false });

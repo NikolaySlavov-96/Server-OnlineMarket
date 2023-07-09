@@ -1,4 +1,4 @@
-const ShortModel = require("../models/shortProdModel");
+const ShortModel = require("../models/ShortProdModel");
 
 const getSearchResult = async (query) => {
     return await ShortModel.find(query)

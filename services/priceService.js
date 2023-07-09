@@ -1,5 +1,7 @@
-const PriceModel = require("../models/priceModel");
+const PriceModel = require("../models/PriceModel");
+
 const { calculatePrice } = require("../util/prices");
+
 
 const createPriceWithProduct = async (dataSource) => {
     return await PriceModel.create({

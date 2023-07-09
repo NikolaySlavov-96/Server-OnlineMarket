@@ -5,9 +5,9 @@ require('dotenv').config();
 
 const JWT_Secret = process.env.JWT_SECRES;
 
-const UserModel = require('../models/userModel');
+const UserModel = require('../models/UserModel');
 const BlacklistUserModel = require('../models/BlackListUserModel');
-const ActivationModel = require('../models/activationModel');
+const ActivationModel = require('../models/ActivationModel');
 
 const { createNewDate } = require('../util/dates');
 const { sendFromNoReplyEmail } = require('./emailService');

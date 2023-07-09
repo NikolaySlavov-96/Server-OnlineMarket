@@ -1,5 +1,5 @@
-const ShortProduct = require("../models/shortProdModel");
-const TechnologyModel = require("../models/products/technologyModel");
+const ShortProduct = require("../models/ShortProdModel");
+const TechnologyModel = require("../models/products/TechnologyModel");
 
 const { createPriceWithProduct, updatePriceWithProduct } = require("./priceService");
 

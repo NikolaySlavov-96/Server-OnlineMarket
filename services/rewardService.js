@@ -1,6 +1,6 @@
-const UserModel = require("../models/userModel");
-const RewardCodeModel = require("../models/rewartCodeModel");
-const PartnerCodeModel = require("../models/partnerCodeModel");
+const UserModel = require("../models/UserModel");
+const RewardCodeModel = require("../models/RewartCodeModel");
+const PartnerCodeModel = require("../models/PartnerCodeModel");
 
 const { createNewDate } = require("../util/dates");
 const { generateCode } = require("../util/generatePromocode");

@@ -1,4 +1,5 @@
-const LastCallModell = require("../models/lastCallModel");
+const LastCallModell = require("../models/LastCallModel");
+
 const { createNewDate } = require("../util/dates");
 
 

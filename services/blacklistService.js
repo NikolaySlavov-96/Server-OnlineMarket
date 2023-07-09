@@ -1,4 +1,4 @@
-const BlacklistUserModel = require('../models/blackListUserModel');
+const BlacklistUserModel = require('../models/BlackListUserModel');
 const { createNewDate } = require('../util/dates');
 
 const getAllBlacklists = async () => {
