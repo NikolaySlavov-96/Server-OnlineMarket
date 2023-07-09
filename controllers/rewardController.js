@@ -1,11 +1,12 @@
 const { validationResult } = require('express-validator');
 
 const { getWheelReward, getBirthdays, saveCodeUsers, getRewarCode, createPartnerCode } = require("../services/rewardService");
+const { emailsSender } = require('../script/emailScript');
+
 const { milisecondsOfDays, createDateForBirthday } = require('../util/dates');
 const { generateCode } = require('../util/generatePromocode');
 const { errorParser } = require("../util/parser");
-
-const { sendFromNoReplyEmail } = require('../services/emailService');
+const { createInterval } = require('../util/setInterval');
 
 
 const getRewardWheel = async (req, res) => {
@@ -25,7 +26,6 @@ const getRewardWheel = async (req, res) => {
 
 const verifyRewardCode = async (req, res) => {
     try {
-        console.log(req.query)
         const code = await getRewarCode(req.query.promocode);
         res.json(code);
     } catch (err) {
@@ -44,44 +44,24 @@ const addingPartnerCode = async (req, res) => {
     }
 }
 
-const dayToMilisecond = milisecondsOfDays();
-setInterval(() => {
-    sendGiftForBirthdat();
-    setInterval(() => {
-        congratulationForBirthday();
-    }, 600000); //--> 10 minutes after first
-}, dayToMilisecond);
-
-const sendGiftForBirthdat = async () => {
+const sendGiftForBirthday = async () => {
+    const date = createDateForBirthday(2); // 2 day befor birthday
+    const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
     const promocode = generateCode();
-    const array = await birthday(2, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', promocode);
+    
+    const array = await emailsSender(allBirthdays, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', promocode);
     await saveCodeUsers(promocode, 'Happy Byrhday Code', array);
 }
+const dayToMilisecond = milisecondsOfDays();
+createInterval(dayToMilisecond, sendGiftForBirthday);
 
 const congratulationForBirthday = async () => {
-    birthday(0, 'Today your Birthday', 'congratulationForBirthday');
-}
-
-const birthday = async (time, message, template, promocode) => {
-    const date = createDateForBirthday(time);
-
-    const sendedCode = [];
+    const date = createDateForBirthday(0); //  day on birthday
     const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
-    allBirthdays.map(e => {
-        // To Do happy anniversary
-        // const userYear = e.birthday.split('/')[2]
-        // const currentDate = date.year
 
-        sendedCode.push(e._id);
-        e = { ...e._doc, code: promocode }
-        sendFromNoReplyEmail(e.email, message, template, e);
-    });
-
-    if (promocode) {
-        return sendedCode;
-    }
+    emailsSender(allBirthdays, 'Today your Birthday', 'congratulationForBirthday');
 }
-
+createInterval((dayToMilisecond + 600000), congratulationForBirthday);
 
 module.exports = {
     getRewardWheel,
