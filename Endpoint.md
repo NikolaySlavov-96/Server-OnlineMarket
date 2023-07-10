@@ -18,8 +18,8 @@
     }
    - login POST --> /auth//login
     {
-    "email",
-    "password",
+    "email": "",
+    "password": "",
     stayLogin --> check square
     }
    - Logging out POST --> /auth/logout
@@ -45,7 +45,7 @@
 
 3. Product Endpoint
 
-   - get All products GET --> /product/categories --> // catalog page
+   - get All products GET --> /product/categories?category={} or subCategory={} --> // catalog page for category or subCategody
    - get one product GET --> /product/:category/:idSource --> detail page
       - categorys
          - electronics
@@ -64,11 +64,12 @@
       "imgs": ["", ""],
       "description": "",
       "manufacture": "",
-      "sizes": "", ?
-      "colors": "", ?
       "release": "",
-      "buyPrice": "",
-      "quantity": NumberproductCode
+      "buyPrice": Number,
+      "quantity": Number,
+      "colors": "", ? optional relative to the category
+      "sizes": "", ? optional relative to the category
+      "material": ", ? optional relative to the category
     }
    - edit product PUT --> /product/:category/:idSource
     {
