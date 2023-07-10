@@ -1,6 +1,10 @@
+const day = 86400000;
+
 const createInterval = (interval, fn) => {
-    setInterval(() => {
-        fn()
+    setTimeout(() => {
+        setInterval(() => {
+            fn();
+        }, day);
     }, interval);
 }
 
