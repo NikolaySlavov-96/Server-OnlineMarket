@@ -1,5 +1,8 @@
 const ShortProduct = require("../models/ShortProdModel");
-const TechnologyModel = require("../models/products/TechnologyModel");
+const ElectronicsModel = require("../models/products/ElectronicsModel");
+const BabysModel = require("../models/products/BabysModel");
+const FashionModel = require("../models/products/FashionModel");
+const OfficeModel = require("../models/products/OfficeModel");
 
 const { createPriceWithProduct, updatePriceWithProduct } = require("./priceService");
 
@@ -7,12 +10,15 @@ const { createNewDate } = require("../util/dates");
 const { changeFilds } = require("../util/changeFilds");
 
 const allProductCollection = {
-    'technology': TechnologyModel
+    'electronics': ElectronicsModel,
+    'babys': BabysModel,
+    'fashion': FashionModel,
+    'office': OfficeModel,
 }
 
 const obectOfKeys = {
     'shortProduct': ['coverImg', 'productName', 'category', 'subCategory', 'release', 'mark', 'productCode'],
-    'technology': ['imgs', 'description', 'sizes', 'manufacture'],
+    'electronics': ['imgs', 'description', 'sizes', 'manufacture'],
 }
 
 const getAll = (query, limit, skipSource) => {
@@ -28,7 +34,6 @@ const getById = async (category, idSource) => {
 }
 
 const create = async (dataSource) => {
-
     const createPrice = await createPriceWithProduct(dataSource);
     const short = {
         price: createPrice._id,
@@ -36,11 +41,9 @@ const create = async (dataSource) => {
     const dataShortCategory = changeFilds(obectOfKeys, short, dataSource, 'shortProduct');
     const shortCategory = await ShortProduct.create(dataShortCategory);
 
-
     const value = {
         shortId: shortCategory._id,
         createdAt: createNewDate(),
-        lastUpdate: createNewDate(),
     }
     const dataSpecificCategory = changeFilds(obectOfKeys, value, dataSource, dataSource.category);
     const specificCategory = await allProductCollection[dataSource.category].create(dataSpecificCategory);
@@ -55,8 +58,6 @@ const updateById = async (idSource, dataSource) => {
     const dataShortCategory = changeFilds(obectOfKeys, oldShortCategory, dataSource, 'shortProduct');
     const dataSpecificCategory = changeFilds(obectOfKeys, oldSpecificCategory, dataSource, dataSource.category);
 
-    dataSpecificCategory.lastUpdate = createNewDate();
-
     await updatePriceWithProduct(oldShortCategory.price, dataSource);
     const shortCategory = await dataShortCategory.save();
     const specificCategory = await dataSpecificCategory.save();
@@ -67,6 +68,7 @@ const updateById = async (idSource, dataSource) => {
 const deleteById = async (idSource) => {
     const oldData = await ShortProduct.findOne({ productId: idSource });
 
+    oldData.lastUpdate = createNewDate();
     oldData.isDelete = !oldData.isDelete;
 
     return oldData.save();

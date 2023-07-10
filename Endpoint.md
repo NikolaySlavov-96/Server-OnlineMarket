@@ -47,7 +47,11 @@
 
    - get All products GET --> /product/categories --> // catalog page
    - get one product GET --> /product/:category/:idSource --> detail page
-      - first category --> technology
+      - categorys
+         - electronics
+         - babys
+         - fashion
+         - office
 
    - create new product --> /product/category
     {
