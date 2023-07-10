@@ -6,7 +6,7 @@ require('dotenv').config();
 const JWT_Secret = process.env.JWT_SECRES;
 
 const UserModel = require('../models/UserModel');
-const BlacklistUserModel = require('../models/BlackListUserModel');
+const BlackListTokenModel = require('../models/BackListTokenModel');
 const ActivationModel = require('../models/ActivationModel');
 
 const { createNewDate } = require('../util/dates');
@@ -72,7 +72,7 @@ async function login(email, password, stayLogin) {
 }
 
 async function logout(token) {
-    const request = await BlackListTokenModel.create({
+    const request = await BlacklistUserModel.create({
         inActivateToken: token,
     });
     return request;

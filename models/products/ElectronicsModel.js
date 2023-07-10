@@ -10,6 +10,6 @@ const technologySchema = new Schema({
     lastUpdate: { type: Date, required: true },
 });
 
-const TechnologyModel = model('Technology', technologySchema);
+const ElectronicsModel = model('Electronics', technologySchema);
 
-module.exports = TechnologyModel;
+module.exports = ElectronicsModel;

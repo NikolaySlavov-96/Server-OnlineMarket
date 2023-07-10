@@ -5,7 +5,7 @@ const profileController = require('../controllers/profilController');
 const { hasUser } = require('../middlewares/guards');
 
 profile.get('/profile', 
-    hasUser(), 
+    hasUser(),
     profileController.getUser
 );
 
