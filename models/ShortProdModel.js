@@ -2,7 +2,7 @@ const { model, Schema, Types: { ObjectId } } = require('mongoose');
 
 const shortProductSchema = new Schema({
     coverImg: { type: String, required: true }, // check type file
-    productCode: { type: Number, required: true, unique: true },
+    productCode: { type: String, required: true, unique: true },
     mark: { type: String, required: true, },
     productName: { type: String, required: true },
     category: { type: String, required: true },

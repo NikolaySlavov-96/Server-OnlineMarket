@@ -19,6 +19,9 @@ const allProductCollection = {
 const obectOfKeys = {
     'shortProduct': ['coverImg', 'productName', 'category', 'subCategory', 'release', 'mark', 'productCode'],
     'electronics': ['imgs', 'description', 'sizes', 'manufacture'],
+    'fashion': ['imgs', 'description', 'sizes', 'manufacture', 'material'],
+    'babys': ['imgs', 'description', 'sizes', 'manufacture'],
+    'office': ['imgs', 'description', 'sizes', 'manufacture'],
 }
 
 const getAll = (query, limit, skipSource) => {
