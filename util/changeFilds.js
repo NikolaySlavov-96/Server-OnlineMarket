@@ -6,7 +6,7 @@ const changeFilds = (obectOfKeys, oldDate, dataSource, collection) => {
             oldDate[key] = dataSource[key];
         }
     }
-    oldDate.lastUplde = createNewDate();
+    oldDate.lastUpdate = createNewDate();
     
     return oldDate
 }

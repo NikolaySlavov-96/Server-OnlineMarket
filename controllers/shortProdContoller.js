@@ -6,12 +6,16 @@ const { getAll, getById, create, updateById, deleteById } = require("../services
 const { errorParser } = require('../util/parser');
 
 const getAllSource = async (req, res) => {
+    const category = req?.query?.category;
+    const subCategory = req?.query?.subCategory;
     const page = parseInt(req?.query?.page) || 1;
     const limit = parseInt(req?.query?.limit) || 10;
     const skipSource = (page - 1) * limit;
     // To Do quesry for category or eth. serch catehory
     // adding search and with productCode
     const query = { isDelete: false };
+    category ? query.category = category : '';
+    subCategory ? query.subCategory = subCategory: '';
 
     const source = await getAll(query, limit, skipSource);
 
