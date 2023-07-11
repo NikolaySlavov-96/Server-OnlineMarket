@@ -111,7 +111,7 @@
 
 5. Search Endpoint
 
-   - get search date GET --> /search?where
+   - get search date GET --> /search?where=search={searchName} and search by productCode productName category subCategory release
 
 6. Calls with Customer
    - get all calls with customer GET --> /call/user/:userId?sortBy=callDate&limit={quant}
