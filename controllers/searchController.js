@@ -7,13 +7,14 @@ const getFindValue = async (req, res) => {
 
     const findData = req?.query?.where?.split('=');
     const valueFilt = findData[1];
+    const patter = new RegExp(valueFilt, 'i');
 
     const query = {
-        $or: [{ productCode: valueFilt },
-        { productName: valueFilt },
-        { category: valueFilt },
-        { subCategory: valueFilt },
-        { release: valueFilt }]
+        $or: [{ productCode: { $regex: patter } },
+        { productName: { $regex: patter } },
+        { category: { $regex: patter } },
+        { subCategory: { $regex: patter } },
+        { release: { $regex: patter } }]
     }
 
     const searchResult = await getSearchResult(query, limit, skipSource);
