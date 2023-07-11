@@ -3,8 +3,8 @@ const CommentModel = require("../models/CommentarModel");
 const { createNewDate } = require("../util/dates");
 
 
-const getAllComment = (idProduct) => {
-    return CommentModel.find({ productId: idProduct }).find({ isDelete: false });
+const getAllComment = (idProduct, limit, skipSource) => {
+    return CommentModel.find({ productId: idProduct }).find({ isDelete: false }).limit(limit).skip(skipSource);
 }
 
 const getCommentById = (idComment) => {

@@ -8,17 +8,17 @@ const { errorParser } = require('../util/parser');
 const getAllSource = async (req, res) => {
     const category = req?.query?.category;
     const subCategory = req?.query?.subCategory;
+    const release = req?.query?.release;
     const page = parseInt(req?.query?.page) || 1;
     const limit = parseInt(req?.query?.limit) || 10;
     const skipSource = (page - 1) * limit;
-    // To Do quesry for category or eth. serch catehory
-    // adding search and with productCode
-    const query = { isDelete: false };
-    category ? query.category = category : '';
-    subCategory ? query.subCategory = subCategory: '';
 
-    const source = await getAll(query, limit, skipSource);
+    const querys = {};
+    category ? querys.category = category : '';
+    subCategory ? querys.subCategory = subCategory : '';
+    release ? querys.release = release : '';
 
+    const source = await getAll(querys, limit, skipSource);
     res.json(source);
 };
 

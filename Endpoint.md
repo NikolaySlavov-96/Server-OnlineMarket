@@ -45,7 +45,8 @@
 
 3. Product Endpoint
 
-   - get All products GET --> /product/categories?category={} or subCategory={} --> // catalog page for category or subCategody
+   - get All products GET --> /product/categories?
+   category={} / subCategory={} / release={} / page= and limit=
    - get one product GET --> /product/:category/:idSource --> detail page
       - categorys
          - electronics
@@ -92,7 +93,7 @@
 
 4. Commentar Endpoint
 
-   - get commentars for detail page page GET --> /product/category/:idSource/comments
+   - get commentars for detail page page GET --> /product/category/:idSource/comments?page= and limit=
 
    - get one commentar GET --> /product/category/:idSource/comment/:idComment
    - create new commentar POST --> /product/category/:idSource/comment

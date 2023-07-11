@@ -5,7 +5,11 @@ const { errorParser } = require('../util/parser');
 
 
 const getCommentarsByIdProduct = async (req, res) => {
-    const comments = await getAllComment(req.params.idSource);
+    const page = parseInt(req?.query?.page) || 1;
+    const limit = parseInt(req?.query?.limit) || 10;
+    const skipSource = (page - 1) * limit;
+
+    const comments = await getAllComment(req.params.idSource, limit, skipSource);
     res.json(comments);
 }
 
@@ -16,16 +20,12 @@ const getCommentByIdComment = async (req, res) => {
 }
 
 const createComments = async (req, res) => {
-
     try {
         const { errors } = validationResult(req);
-
         if (errors.length > 0) {
             throw errors;
         }
-
         // code for chech whats letter and change isDelete to false or not
-
         const { _id, ownerId, name, commentar, createAt, } = await createCommentForProduct(req.params.idSource, req.user._id, req.body);
         res.json({ _id, ownerId, name, commentar, createAt, });
 
@@ -36,13 +36,12 @@ const createComments = async (req, res) => {
 }
 
 const editCommentByIdComment = async (req, res) => {
-
     try {
         const { errors } = validationResult(req);
         if (errors.length > 0) {
             throw errors;
         }
-        
+
         const { _id, ownerId, name, commentar, isDelete, } = await editCommentById(req.params.idComment, req.body);
         res.json({ _id, ownerId, name, commentar, isDelete, });
     } catch (err) {
