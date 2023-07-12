@@ -98,8 +98,8 @@
    - get one commentar GET --> /product/category/:idSource/comment/:idComment
    - create new commentar POST --> /product/category/:idSource/comment
     {
-    name,
-    commentar,
+    "name": "",
+    "commentar": "",
     }
 
    - edit commentar PUT --> /product/category/:idSource/comment/:idComment
@@ -144,6 +144,9 @@
    - get using reward code GET --> /reward/code?promocode={promocode} --> return true or false
 
    - create partner code GET --> /reward/adding?partnercode={partnercode} --> return code
+
+9. Controll
+   - get all comments for from and to date GET --> /control/allCommentars?from={}&to={}isDelete={boolean}
 
 ## Front End endpoints
 
