@@ -23,26 +23,28 @@ const getBirthdays = async (birthday) => {
     return UserModel.find({ birthday: { $regex: `^${birthday}` } }).select(['email', 'firstName', 'lastName', 'birthday']);
 };
 
-const saveCodeUsers = async (promocode, description, sendedCode) => {
+const saveCodeUsers = async (date) => {
     return await RewardCodeModel.create({
-        promocode,
-        description,
-        sendedCode,
+        promocode: date.promocode,
+        description: date.description,
+        sendedCode: date.sendedCode,
+        purcendDiscount: date.purcendDiscount,
         lastUpdate: createNewDate(),
         createAt: createNewDate(),
     });
 };
 
-const getRewarCode = async (promocode) => {
-    const rewardCode = await RewardCodeModel.find({ promocode }).find({ isExpired: false }).count() > 0;
-    const partnerCode = !rewardCode && await PartnerCodeModel.find({ promocode }).find({ isDelete: false }).count() > 0;
+const getRewarCode = async (query) => {
+    const rewardCode = await RewardCodeModel.find(query).count() > 0;
+    const partnerCode = !rewardCode && await PartnerCodeModel.find(query).count() > 0;
 
     return rewardCode || partnerCode;
 };
 
-const createPartnerCode = async (promocode) => {
+const createPartnerCode = async (query) => {
     return await PartnerCodeModel.create({
-        promocode,
+        promocode: query.promocode,
+        purcendDiscount: query.purcendDiscount,
         createAt: createNewDate(),
         lastUpdate: createNewDate(),
     });

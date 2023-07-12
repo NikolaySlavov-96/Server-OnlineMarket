@@ -26,7 +26,8 @@ const getRewardWheel = async (req, res) => {
 
 const verifyRewardCode = async (req, res) => {
     try {
-        const code = await getRewarCode(req.query.promocode);
+        const query = { isDelete: false, promocode: req.query.promocode }
+        const code = await getRewarCode(query);
         res.json(code);
     } catch (err) {
         const message = errorParser(err);
@@ -36,7 +37,7 @@ const verifyRewardCode = async (req, res) => {
 
 const addingPartnerCode = async (req, res) => {
     try {
-        const code = await createPartnerCode(req.query.partnercode);
+        const code = await createPartnerCode(req.query);
         res.json(code);
     } catch (err) {
         const message = errorParser(err);
@@ -48,9 +49,10 @@ const sendGiftForBirthday = async () => {
     const date = createDateForBirthday(2); // 2 day befor birthday
     const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
     const promocode = generateCode();
-    
-    const array = await emailsSender(allBirthdays, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', promocode);
-    await saveCodeUsers(promocode, 'Happy Byrhday Code', array);
+    const purcendDiscount = 20; // To Do outsit this code;
+
+    const sendedCode = await emailsSender(allBirthdays, 'Happy Birthday after 2 days', 'sendGiftForBirthdat', { promocode, purcendDiscount });
+    await saveCodeUsers({ promocode, description: 'Happy Byrhday Code', sendedCode, purcendDiscount });
 }
 const dayToMilisecond = milisecondsOfDays();
 createInterval(dayToMilisecond, sendGiftForBirthday);
