@@ -1,9 +1,9 @@
-const blacklistController = require('../controllers/blacklistController')
+const blacklist = require('express').Router();
 
+const blacklistController = require('../controllers/blacklistController')
 const { hasUser, hasRole } = require('../middlewares/guards');
 const role = require('./role');
 
-const blacklist = require('express').Router();
 
 blacklist.get('/',
     hasUser(),
