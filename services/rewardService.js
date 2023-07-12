@@ -58,7 +58,9 @@ const createPartnerCode = async (query) => {
 
 const editExpireCode = async (idCode) => {
     const code = await RewardCodeModel.findById(idCode);
-    code.isExpired = true;
+
+    code.lastUpdate = createNewDate();
+    code.isExpired = !code.isExpired;
     return await code.save();
 };
 
