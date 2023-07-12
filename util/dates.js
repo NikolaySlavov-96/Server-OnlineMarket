@@ -3,6 +3,11 @@ function createNewDate() {
     return date;
 }
 
+function createNewDateWithDate(data) {
+    const date = new Date(data);
+    return date;
+}
+
 function milisecondsOfDays() {
     const currentMoment = createNewDate();
     const minets = currentMoment.getMinutes();
@@ -36,6 +41,7 @@ function createDateForBirthday(optionDate) {
 
 module.exports = {
     createNewDate,
+    createNewDateWithDate,
     milisecondsOfDays,
     createDateForBirthday,
 }
