@@ -16,7 +16,7 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     middleName: { type: String },
     lastName: { type: String, required: true },
-    creadAt: { type: Date, required: true },
+    createdAt: { type: Date, required: true },
     lastUpdate: { type: Date, required: true },
     role: { type: [{ type: String, enum: ['customer', 'seller', 'partner', 'moderator', 'marketing', 'manager', 'admin'] }], default: ['customer'] },
     isActivate: { type: Boolean, default: false },
