@@ -10,6 +10,7 @@ const getFindValue = async (req, res) => {
     const patter = new RegExp(valueFilt, 'i');
 
     const query = {
+        isDelete: false,
         $or: [{ productCode: { $regex: patter } },
         { productName: { $regex: patter } },
         { category: { $regex: patter } },
