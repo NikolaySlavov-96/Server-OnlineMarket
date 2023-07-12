@@ -7,6 +7,8 @@ const reward = require("../routes/reward");
 const blacklist = require("../routes/blacklist");
 const control = require("../routes/control");
 
+const indexScript = require("../script/indexScript");
+
 module.exports = (app) => {
     app.use('/auth', auth);
     app.use('/user', user);
@@ -16,4 +18,7 @@ module.exports = (app) => {
     app.use('/reward', reward);
     app.use('/blacklist', blacklist);
     app.use('/control', control);
+
+    //call scripts
+    indexScript();
 }
