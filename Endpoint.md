@@ -10,6 +10,7 @@
     "imgUrl": "notRequred",
     "password": "required",
     "rePassword": "required",
+    "circulation": "required",
     "telephone": "required",
     "birthday": "required", format(22/22/2222),
     "firstName": "required",

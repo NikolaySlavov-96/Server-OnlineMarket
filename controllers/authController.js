@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
             }
         }
 
-        const token = await register(body.email, body.imgUrl, body.password, body.telephone, body.birthday, body.firstName, body.middleName, body.lastName);
+        const token = await register(body.email, body.imgUrl, body.password, body.telephone, body.birthday, body.firstName, body.middleName, body.lastName, body.circulation);
         res.json(token);
     } catch (err) {
         const message = errorParser(err);

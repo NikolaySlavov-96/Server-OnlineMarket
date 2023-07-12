@@ -12,7 +12,7 @@ const ActivationModel = require('../models/ActivationModel');
 const { createNewDate } = require('../util/dates');
 const { sendFromNoReplyEmail } = require('./emailService');
 
-async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName) {
+async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName, circulation) {
 
     const existingEmail = await UserModel.findOne({ email }).collation({ locale: 'en', strength: 2 });
     if (existingEmail) {
@@ -27,6 +27,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
     const userData = await UserModel.create({
         email,
         imgUrl,
+        circulation,
         password: await bcrypt.hash(password, 10),
         telephone,
         birthday,
@@ -72,7 +73,7 @@ async function login(email, password, stayLogin) {
 }
 
 async function logout(token) {
-    const request = await BlacklistUserModel.create({
+    const request = await BlackListTokenModel.create({
         inActivateToken: token,
     });
     return request;
@@ -98,6 +99,7 @@ function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivat
         lastName,
         role,
         isActivate,
+        circulation,
         accessToken: jwt.sign(payload, JWT_Secret, { expiresIn: expire }),
     }
 }
