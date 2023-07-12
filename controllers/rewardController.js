@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const { getWheelReward, getBirthdays, saveCodeUsers, getRewarCode, createPartnerCode } = require("../services/rewardService");
 const { emailsSender } = require('../script/emailScript');
 
-const { milisecondsOfDays, createDateForBirthday } = require('../util/dates');
+const { milisecondsOfDays, createDateWithOption } = require('../util/dates');
 const { generateCode } = require('../util/generatePromocode');
 const { errorParser } = require("../util/parser");
 const { createInterval } = require('../util/setInterval');
@@ -46,7 +46,7 @@ const addingPartnerCode = async (req, res) => {
 }
 
 const sendGiftForBirthday = async () => {
-    const date = createDateForBirthday(2); // 2 day befor birthday
+    const date = createDateWithOption(2); // 2 day befor birthday
     const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
     const promocode = generateCode();
     const purcendDiscount = 20; // To Do outsit this code;
@@ -55,10 +55,10 @@ const sendGiftForBirthday = async () => {
     await saveCodeUsers({ promocode, description: 'Happy Byrhday Code', sendedCode, purcendDiscount });
 }
 const dayToMilisecond = milisecondsOfDays();
-createInterval(dayToMilisecond, sendGiftForBirthday);
+createInterval(dayToMilisecond + 300000, sendGiftForBirthday);
 
 const congratulationForBirthday = async () => {
-    const date = createDateForBirthday(0); //  day on birthday
+    const date = createDateWithOption(0); //  day on birthday
     const allBirthdays = await getBirthdays(`${date.day}/${date.month}`);
 
     emailsSender(allBirthdays, 'Today your Birthday', 'congratulationForBirthday');

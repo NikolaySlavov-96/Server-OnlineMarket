@@ -17,13 +17,13 @@ function milisecondsOfDays() {
 
     if (minets > 0 && minets < 60) {
         currentH -= 1;
-        result = ((60 - minets) + 10) * 60 * 1000;
+        result = (60 - minets) * 60 * 1000;
     }
     const dayToMilisecond = (currentH - hours) * 60 * 60 * 1000 + result;
     return dayToMilisecond
 };
 
-function createDateForBirthday(optionDate) {
+function createDateWithOption(optionDate) {
     const currentDate = createNewDate();
     const getYear = currentDate.getFullYear();
     let getMonth = (currentDate.getMonth() + 1);
@@ -43,5 +43,5 @@ module.exports = {
     createNewDate,
     createNewDateWithDate,
     milisecondsOfDays,
-    createDateForBirthday,
+    createDateWithOption,
 }
