@@ -41,6 +41,12 @@ const getRewarCode = async (query) => {
     return rewardCode || partnerCode;
 };
 
+const getRewarExpireCode = async (query) => {
+    const rewardCode = await RewardCodeModel.find(query);
+
+    return rewardCode
+}
+
 const createPartnerCode = async (query) => {
     return await PartnerCodeModel.create({
         promocode: query.promocode,
@@ -50,10 +56,18 @@ const createPartnerCode = async (query) => {
     });
 };
 
+const editExpireCode = async (idCode) => {
+    const code = await RewardCodeModel.findById(idCode);
+    code.isExpired = true;
+    return await code.save();
+};
+
 module.exports = {
     getWheelReward,
     getBirthdays,
     saveCodeUsers,
     getRewarCode,
+    getRewarExpireCode,
     createPartnerCode,
+    editExpireCode,
 }
