@@ -143,8 +143,7 @@
 
 8. reward
    - get using reward code GET --> /reward/code?promocode={promocode} --> return true or false
-
-   - create partner code GET --> /reward/adding?partnercode={partnercode} --> return code
+   - create partner code GET --> /reward/adding?partnercode={partnercode}&purcendDiscount={} --> return code
 
 9. Controll
    - get all comments for from and to date GET --> /control/allCommentars?from={}&to={}isDelete={boolean}

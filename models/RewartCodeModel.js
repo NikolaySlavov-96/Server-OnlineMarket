@@ -3,6 +3,7 @@ const { model, Schema, Types: { ObjectId } } = require('mongoose');
 const rewardCodeSchema = new Schema({
     promocode: { type: String, required: true },
     description: { type: String, required: true },
+    purcendDiscount: { type: Number, required: true },
     sendedCode: { type: [ObjectId], required: true, default: [] },
     whichUsing: { type: [ObjectId], required: true, default: [] },
     createAt: { type: Date, required: true },
