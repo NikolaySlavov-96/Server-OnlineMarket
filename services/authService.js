@@ -11,6 +11,7 @@ const ActivationModel = require('../models/ActivationModel');
 
 const { createNewDate } = require('../util/dates');
 const { sendFromNoReplyEmail } = require('./emailService');
+const { generateCode } = require('../util/generatePromocode');
 
 async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName, circulation) {
 
@@ -132,11 +133,22 @@ async function checkFieldInDB(date) {
     return isUsing;
 }
 
+async function resetPassword({ email, telephone }) {
+    const checkEmail = await UserModel.findOne({ email, telephone });
+    if(checkEmail.length === 0) {
+        throw new Error('Email address or telephone number is not valid');
+    }
+    const code = generateCode(); // save code in DB
+    sendFromNoReplyEmail(checkEmail.email, 'Reset Password', 'resetPassword', code);
+    return checkEmail
+}
+
 module.exports = {
     register,
     login,
     logout,
     verificationToken,
     activateAccount,
-    checkFieldInDB
+    checkFieldInDB,
+    resetPassword,
 }

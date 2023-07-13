@@ -38,5 +38,7 @@ users.post('/activation',
 users.get('/check',
     userController.checkFields);
 
+users.post('/reset',
+    userController.resetPasswordWithEmail);
 
 module.exports = users;

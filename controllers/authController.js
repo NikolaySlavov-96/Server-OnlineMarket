@@ -1,8 +1,9 @@
 const { validationResult } = require('express-validator');
 
-const { register, login, logout, activateAccount, checkFieldInDB } = require('../services/authService');
+const { register, login, logout, activateAccount, checkFieldInDB, resetPassword } = require('../services/authService');
 const { errorParser } = require('../util/parser');
 const { createNewDate } = require('../util/dates');
+const { connect } = require('mongoose');
 
 const createUser = async (req, res) => {
     const { errors } = validationResult(req);
@@ -86,6 +87,16 @@ const checkFields = async (req, res) => {
     res.json(result);
 }
 
+const resetPasswordWithEmail = async (req, res) => {
+    try {
+        const reset = await resetPassword(req.query);
+        res.status(200).json({ message: 'successfull change password, Please check email' })
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message })
+    }
+}
+
 
 module.exports = {
     createUser,
@@ -93,4 +104,5 @@ module.exports = {
     exitUset,
     activateUser,
     checkFields,
+    resetPasswordWithEmail,
 }
