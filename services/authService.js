@@ -8,6 +8,7 @@ const JWT_Secret = process.env.JWT_SECRES;
 const UserModel = require('../models/UserModel');
 const BlackListTokenModel = require('../models/BackListTokenModel');
 const ActivationModel = require('../models/ActivationModel');
+const ResetPasswordModel = require('../models/ResetPasswordModel');
 
 const { createNewDate } = require('../util/dates');
 const { sendFromNoReplyEmail } = require('./emailService');
@@ -135,10 +136,17 @@ async function checkFieldInDB(date) {
 
 async function resetPassword({ email, telephone }) {
     const checkEmail = await UserModel.findOne({ email, telephone });
-    if(checkEmail.length === 0) {
+    if (checkEmail.length === 0) {
         throw new Error('Email address or telephone number is not valid');
     }
-    const code = generateCode(); // save code in DB
+
+    const code = generateCode();
+    await ResetPasswordModel.create({
+        userId: checkEmail._id,
+        sendCode: code,
+        dateSend: createNewDate(),
+    });
+
     sendFromNoReplyEmail(checkEmail.email, 'Reset Password', 'resetPassword', code);
     return checkEmail
 }
