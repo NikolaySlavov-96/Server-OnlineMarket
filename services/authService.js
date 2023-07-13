@@ -30,7 +30,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
         email,
         imgUrl,
         circulation,
-        password: await bcrypt.hash(password, 10),
+        password: await hashPassword(password),
         telephone,
         birthday,
         firstName,
@@ -81,7 +81,7 @@ async function logout(token) {
     return request;
 }
 
-function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivate }, stayLogin) {
+function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivate, circulation }, stayLogin) {
     const payload = {
         _id,
         email,
@@ -151,6 +151,31 @@ async function resetPassword({ email, telephone }) {
     return checkEmail
 }
 
+async function resetPasswordWithCode({ resetCode, newPassword, repeatNewPassword }) {
+    const checkResetCode = await ResetPasswordModel.findOne({ isExpired: false, sendCode: resetCode });
+    if(!checkResetCode) {
+        throw new Error('Reset code is using or expired')
+    }
+    checkResetCode.userData = createNewDate();
+    checkResetCode.isExpired = true;
+    
+    const newPass = await hashPassword(newPassword);
+    if (newPassword !== repeatNewPassword) {
+        throw new Error('Password don\'t match');
+    }
+    
+    const userDate = await UserModel.findOne({ _id: checkResetCode.userId });
+    userDate.password = newPass
+    userDate.lastUpdate = createNewDate();
+    const date = await userDate.save();
+    
+    await checkResetCode.save();
+
+    return createTokent(date)
+}
+
+const hashPassword = async (password) => await bcrypt.hash(password, 10);
+
 module.exports = {
     register,
     login,
@@ -159,4 +184,5 @@ module.exports = {
     activateAccount,
     checkFieldInDB,
     resetPassword,
+    resetPasswordWithCode,
 }
