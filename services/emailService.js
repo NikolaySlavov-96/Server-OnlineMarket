@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const registerTemplate = require('../emailTemplates/registertemplate');
 const sendGiftForBirthdat = require('../emailTemplates/sendGiftForBirthdat');
 const congratulationForBirthday = require('../emailTemplates/congratulationForBirthday');
+const resetPasswordTemplate = require('../emailTemplates/resetPasswordTemplate');
 
 require('dotenv').config();
 
@@ -10,6 +11,7 @@ const templates = {
     'register': (date) => registerTemplate(date),
     'sendGiftForBirthdat': (date) => sendGiftForBirthdat(date),
     'congratulationForBirthday': (date) => congratulationForBirthday(date),
+    'resetPassword': (date) => resetPasswordTemplate(date),
 }
 
 
