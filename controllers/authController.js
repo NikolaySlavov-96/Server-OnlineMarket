@@ -88,6 +88,11 @@ const checkFields = async (req, res) => {
 
 const resetPasswordWithEmail = async (req, res) => {
     try {
+        const { errors } = validationResult(req);
+
+        if (errors.length > 0) {
+            throw errors
+        }
         const reset = await resetPassword(req.body);
         res.status(200).json({ message: 'successfull change password, Please check email' })
     } catch (err) {
@@ -98,6 +103,11 @@ const resetPasswordWithEmail = async (req, res) => {
 
 const changePasswordWithCode = async (req, res) => {
     try {
+        const { errors } = validationResult(req);
+
+        if (errors.length > 0) {
+            throw errors
+        }
         const newPassword = await resetPasswordWithCode(req.body)
         res.json(newPassword);
     } catch (err) {

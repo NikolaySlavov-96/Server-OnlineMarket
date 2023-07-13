@@ -39,6 +39,14 @@ users.get('/check',
     userController.checkFields);
 
 users.post('/reset',
+    body('email').isEmail().withMessage('Email addres is required'),
+    body('telephone').notEmpty().withMessage('Telephonbe nuber is required'),
     userController.resetPasswordWithEmail);
+
+users.post('/createpassword',
+    body('resetCode').notEmpty().withMessage('Reset code is required'),
+    body('newPassword').isLength({ min: 3 }).withMessage('Password minimal length is 3 characters'),
+    body('repeatNewPassword').isLength({ min: 3 }).withMessage('Password minimal length is 3 characters'),
+    userController.changePasswordWithCode);
 
 module.exports = users;
