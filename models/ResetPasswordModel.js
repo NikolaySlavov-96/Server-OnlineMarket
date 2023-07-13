@@ -3,6 +3,7 @@ const { model, Schema, Types: { ObjectId } } = require('mongoose');
 const resetPasswordSchema = new Schema({
     userId: { type: ObjectId, required: true, ref: 'User' },
     sendCode: { type: String, required: true },
+    isExpired: { type: Boolean, default: false },
     dateSend: { type: Date, required: true },
     dateUsing: { type: Date },
 });
