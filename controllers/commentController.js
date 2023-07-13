@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const { getAllComment, createCommentForProduct, editCommentById, deleteCommentById, getCommentById } = require("../services/commentService");
 const { errorParser } = require('../util/parser');
 const { createNewDateWithDate } = require('../util/dates');
+const badWordCheck = require('../util/badWordCheck');
 
 
 const getCommentarsByIdProduct = async (req, res) => {
@@ -45,6 +46,9 @@ const createComments = async (req, res) => {
             throw errors;
         }
         // code for chech whats letter and change isDelete to false or not
+        if(badWordCheck(req.body.commentar)){
+            throw new Error('Your comment may include uncensored words.Please check and try again.')
+        };
         const { _id, ownerId, name, commentar, createAt, } = await createCommentForProduct(req.params.idSource, req.user._id, req.body);
         res.json({ _id, ownerId, name, commentar, createAt, });
 
