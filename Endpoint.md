@@ -43,17 +43,17 @@
       }
 
 2. Userprofil Endpoint
-    - get user data GET --> /users/profile
-    - edit user date PUT --> /users/profile/
+    - get user data GET --> /user/profile
+    - edit user date PUT --> /user/profile/
     {
-        imgUrl;
-        password;
-        birthday;
-        firstName;
-        middleName;
-        lastName;
+        "imgUrl": "",
+        "password": "",
+        "birthday": "",
+        "firstName": "",
+        "middleName": "",
+        "lastName": ""
     }
-    - delete user DELETE --> /users/profile/
+    - delete user DELETE --> /user/profile/
 
 3. Product Endpoint
 
@@ -68,8 +68,8 @@
 
    - create new product --> /product/category
     {
-      "productCode": Number,
-      "coverImg": "", // adding in imgs
+      "productCode": "",
+      "coverImg": "",
       "mark": "",
       "productName": "",
       "category": "",
@@ -86,8 +86,8 @@
     }
    - edit product PUT --> /product/:category/:idSource
     {
-      "productCode": Number,
-      "coverImg": "", // adding in imgs
+      "productCode": "",
+      "coverImg": "",
       "mark": "",
       "productName": "",
       "category": "",
@@ -95,11 +95,12 @@
       "imgs": ["", ""],
       "description": "",
       "manufacture": "",
-      "sizes": "", ?
-      "colors": "", ?
       "release": "",
-      "buyPrice": "",
-      "quantity": NumberproductCode
+      "buyPrice": Number,
+      "quantity": Number,
+      "colors": "", ? optional relative to the category
+      "sizes": "", ? optional relative to the category
+      "material": ", ? optional relative to the category
     }
    - delete product DELETE --> /product/category/:idSource
 
