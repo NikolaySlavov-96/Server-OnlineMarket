@@ -1,5 +1,10 @@
 const BlacklistUserModel = require('../models/BlackListUserModel');
+const { changeFilds } = require('../util/changeFilds');
 const { createNewDate } = require('../util/dates');
+
+const obectOfKeys = {
+    'addingInBlacklist': ['userId', 'commentId', 'type', 'description'],
+}
 
 const getAllBlacklists = async () => {
     return await BlacklistUserModel.find({ isDeleted: false });
@@ -11,15 +16,12 @@ const getPersonalBlacklist = async (userId) => {
 
 const addPersonToBlacklist = async (body, message) => {
     const isExsisting = await BlacklistUserModel.findOne({ userId: body.userId });
-    if(!isExsisting) {
-        return await BlacklistUserModel.create({
-            userId: body.userId,
-            commentId: body.commentId,
-            type: body.type,
-            description: message,
+    if (!isExsisting) {
+        const value = {
             createAt: createNewDate(),
-            lastUpdate: createNewDate(),
-        });
+        }
+        const field = changeFilds(obectOfKeys, value, { ...body, message }, 'addingInBlacklist');
+        return await BlacklistUserModel.create(field);
     };
     isExsisting.commentId.push(body.commentId);
     isExsisting.type.push(body.type);

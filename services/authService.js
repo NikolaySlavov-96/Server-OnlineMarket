@@ -36,7 +36,7 @@ async function register(body) {
     }
     const userFields = changeFilds(obectOfKeys, value, body, 'register');
     const userData = await UserModel.create(userFields)
-    
+
     const activateCodel = generateCode(7)
     const userId = userData._id
     await ActivationModel.create({
@@ -155,13 +155,12 @@ async function resetPasswordWithCode({ resetCode, newPassword, repeatNewPassword
     checkResetCode.userData = createNewDate();
     checkResetCode.isExpired = true;
 
-    const newPass = await hashPassword(newPassword);
     if (newPassword !== repeatNewPassword) {
         throw new Error('Password don\'t match');
     }
 
     const userDate = await UserModel.findOne({ _id: checkResetCode.userId });
-    userDate.password = newPass
+    userDate.password = await hashPassword(newPassword);
     userDate.lastUpdate = createNewDate();
     const date = await userDate.save();
 
