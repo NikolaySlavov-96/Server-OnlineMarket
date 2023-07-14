@@ -10,6 +10,7 @@ users.post('/register',
     body('email').isEmail().withMessage('Emais is not corret'),
     body('password').isLength({ min: 5 }).withMessage('Password is not doesn\'t long'),
     body('circulation').isLength({ min: 3 }).withMessage('Circulation is with minimal length 3 character'),
+    body('imgUrl').notEmpty().withMessage('Image addres is required'),
     body('telephone').notEmpty().withMessage('Telephone number is required')
         .isMobilePhone().withMessage('Telephone number is not valid'),
     body('birthday').notEmpty().withMessage('Birthday is required')
