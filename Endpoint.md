@@ -152,9 +152,9 @@
    - remove person from blacklist DELETE --> /blacklist/:userId
    - get all typeCodes GET --> /blaclist/codes
 
-8. reward
+8. Reward
    - get using reward code GET --> /reward/code?promocode={promocode} --> return true or false
-   - create partner code GET --> /reward/adding?partnercode={partnercode}&purcendDiscount={} --> return code
+   - create partner code GET --> /reward/adding?promocode={partnercode}&purcendDiscount={} --> return code
 
 9. Controll
    - get all comments for from and to date GET --> /control/allCommentars?from={}&to={}isDelete={boolean}

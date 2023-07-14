@@ -4,7 +4,12 @@ const PartnerCodeModel = require("../models/PartnerCodeModel");
 
 const { createNewDate } = require("../util/dates");
 const { generateCode } = require("../util/generatePromocode");
+const { changeFilds } = require("../util/changeFilds");
 
+const obectOfKeys = {
+    'createCodeUser': ['promocode', 'description', 'sendedCode', 'purcendDiscount'],
+    'createCodePartner': ['promocode', 'purcendDiscount'],
+}
 
 const getWheelReward = async () => {
     const rewardsArray = ['HEADPHONES', 'T-SHIRT', 'KEYCHAIN', 'MUG', 'WRIST BAND', 'NECKLESS']; //TO DO change to database
@@ -24,14 +29,11 @@ const getBirthdays = async (birthday) => {
 };
 
 const saveCodeUsers = async (date) => {
-    return await RewardCodeModel.create({
-        promocode: date.promocode,
-        description: date.description,
-        sendedCode: date.sendedCode,
-        purcendDiscount: date.purcendDiscount,
-        lastUpdate: createNewDate(),
+    const value = {
         createAt: createNewDate(),
-    });
+    }
+    const field = changeFilds(obectOfKeys, value, date, 'createCodeUser');
+    return await RewardCodeModel.create(field);
 };
 
 const getRewarCode = async (query) => {
@@ -48,12 +50,11 @@ const getRewarExpireCode = async (query) => {
 }
 
 const createPartnerCode = async (query) => {
-    return await PartnerCodeModel.create({
-        promocode: query.promocode,
-        purcendDiscount: query.purcendDiscount,
+    const value = {
         createAt: createNewDate(),
-        lastUpdate: createNewDate(),
-    });
+    }
+    const field = changeFilds(obectOfKeys, value, query, 'createCodePartner');
+    return await PartnerCodeModel.create(field)
 };
 
 const editExpireCode = async (idCode) => {
