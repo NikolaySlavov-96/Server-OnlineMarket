@@ -1,6 +1,6 @@
-function generateCode(){
+function generateCode(length){
     const allowedSingns = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const promocodeLength = 10;
+    const promocodeLength = length || 10;
 
     let code = '';
 
