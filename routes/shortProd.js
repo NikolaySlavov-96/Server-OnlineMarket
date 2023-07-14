@@ -7,20 +7,18 @@ const likeController = require('../controllers/likeController');
 const { hasUser, hasRole } = require('../middlewares/guards');
 const role = require('./role');
 
-//likes
-// shortProd.get('/likes/:productId', likeController.getLikes);
-
-shortProd.post('/likes/:productId',
+// like
+shortProd.post('/likes/:likeId',
     hasUser(),
     hasRole(role.likeingProduct),
     likeController.likeProduct
 );
 
-shortProd.delete('/likes/:productId',
+shortProd.delete('/likes/:likeId',
     hasUser(),
     hasRole(role.likeingProduct),
     likeController.unlikeProduct
-)
+);
 
 
 shortProd.get('/categories', sourceConteroller.getAllSource); //All products

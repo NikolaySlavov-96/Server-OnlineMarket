@@ -27,11 +27,11 @@ const obectOfKeys = {
 }
 
 const getAll = (query, limit, skipSource) => {
-    return ShortProduct.find(query).limit(limit).skip(skipSource).populate([{ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }, { path: 'like', select: ['likeCount', 'users'] }]);
+    return ShortProduct.find(query).limit(limit).skip(skipSource).populate([{ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }, { path: 'like', select: ['likeCount', 'users', '_id'] }]);
 }
 
 const getById = async (category, idSource) => {
-    const shortDate = await ShortProduct.findById(idSource).populate([{ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }, { path: 'like', select: ['likeCount', 'users'] }]).lean();
+    const shortDate = await ShortProduct.findById(idSource).populate([{ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }, { path: 'like', select: ['likeCount', 'users', '_id'] }]).lean();
     const otherDate = await allProductCollection[category].findOne({ shortId: idSource }).lean();
     const allDateOfDB = Object.assign({ ...shortDate }, otherDate);
 
@@ -41,7 +41,8 @@ const getById = async (category, idSource) => {
 const create = async (dataSource) => {
     //create like id for this product
     const createPrice = await createPriceWithProduct(dataSource);
-    const createLikes = await createLike()
+    const createLikes = await createLike();
+    console.log(createLikes);
     const short = {
         price: createPrice._id,
         like: createLikes._id

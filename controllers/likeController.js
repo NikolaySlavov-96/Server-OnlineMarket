@@ -2,15 +2,10 @@ const { addLikeToProduct, removeLike } = require("../services/likeService");
 const { errorParser } = require("../util/parser");
 
 
-// const getLikes = async (req, res) => {
-//     const likeCount = await getAllLikes(req.params.productId);
-//     res.json( likeCount );
-// };
-
 const likeProduct = async (req, res) => {
     try {
-        const { _id, productId, likeCount, users } = await addLikeToProduct(req.params.productId, req.user._id);
-        res.json({ _id, productId, likeCount, users });
+        const { _id, likeCount, users } = await addLikeToProduct(req.params.likeId, req.user._id);
+        res.json({ _id, likeCount, users });
     } catch (err) {
         const message = errorParser(err);
         res.status(400).json({ message });
@@ -19,10 +14,10 @@ const likeProduct = async (req, res) => {
 
 const unlikeProduct = async (req, res) => {
     try {
-        const idProduct = req.params.productId;
+        const likeId = req.params.likeId;
         const userId = req.user._id;
         
-        await removeLike(idProduct, userId)
+        await removeLike(likeId, userId)
         res.status(200).end() 
 
     } catch (err) {
@@ -30,6 +25,8 @@ const unlikeProduct = async (req, res) => {
         res.status(400).json({ message });
     };
 }
+
+//create if the user has liked the product when entering the product
 
 
 module.exports = {
