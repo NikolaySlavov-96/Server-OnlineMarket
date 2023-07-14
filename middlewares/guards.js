@@ -24,8 +24,7 @@ function hasRole(condition) {
     return async (req, res, next) => {
 
         const ownerDate = req?.params?.idComment && await getCommentById(req.params.idComment);
-        // To Do editing Array 
-        if ((req.user && condition.map(e => req.user.role.includes(e))) || ownerDate?.owner.toString() == req?.user?._id) {
+        if ((req.user && condition.some((e) => req.user.role.map(el => el == e))) || ownerDate?.owner.toString() == req?.user?._id) {
             next()
         } else {
             res.status(401).json({ message: 'You canno\'t modify this sources' });
