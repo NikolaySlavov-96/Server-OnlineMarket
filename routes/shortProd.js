@@ -7,6 +7,21 @@ const likeController = require('../controllers/likeController');
 const { hasUser, hasRole } = require('../middlewares/guards');
 const role = require('./role');
 
+//likes
+// shortProd.get('/likes/:productId', likeController.getLikes);
+
+shortProd.post('/likes/:productId',
+    hasUser(),
+    hasRole(role.likeingProduct),
+    likeController.likeProduct
+);
+
+shortProd.delete('/likes/:productId',
+    hasUser(),
+    hasRole(role.likeingProduct),
+    likeController.unlikeProduct
+)
+
 
 shortProd.get('/categories', sourceConteroller.getAllSource); //All products
 
@@ -61,20 +76,5 @@ shortProd.delete('/category/:idSource/comment/:idComment',
     hasRole(role.forCommentars),
     commetController.deleteCommentByIdComment);
 
-
-// like
-shortProd.get('/likes/:productId', likeController.getLikes);
-
-shortProd.post('/likes/:productId',
-    hasUser(),
-    hasRole(role.likeingProduct),
-    likeController.likeProduct
-);
-
-shortProd.delete('/likes/:productId',
-    hasUser(),
-    hasRole(role.likeingProduct),
-    likeController.unlikeProduct
-)
 
 module.exports = shortProd;

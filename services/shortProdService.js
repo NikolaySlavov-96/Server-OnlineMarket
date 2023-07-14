@@ -5,6 +5,8 @@ const FashionModel = require("../models/products/FashionModel");
 const OfficeModel = require("../models/products/OfficeModel");
 
 const { createPriceWithProduct, updatePriceWithProduct } = require("./priceService");
+const { createLike } = require("./likeService");
+
 
 const { createNewDate } = require("../util/dates");
 const { changeFilds } = require("../util/changeFilds");
@@ -30,6 +32,7 @@ const getAll = (query, limit, skipSource) => {
 
 const getById = async (category, idSource) => {
     const shortDate = await ShortProduct.findById(idSource).populate({ path: 'price', select: ['sellPrice', 'discountPurcent', 'currency'] }).lean();
+    const likes = await ShortProduct.findById(idSource).populate({ path: 'like', select: ['likeCount', 'users'] }).lean();
     const otherDate = await allProductCollection[category].findOne({ shortId: idSource }).lean();
     const allDateOfDB = Object.assign({ ...shortDate }, otherDate);
 
@@ -37,9 +40,12 @@ const getById = async (category, idSource) => {
 }
 
 const create = async (dataSource) => {
+    //create like id for this product
     const createPrice = await createPriceWithProduct(dataSource);
+    const createLikes = await createLike()
     const short = {
         price: createPrice._id,
+        like: createLikes._id
     };
     const dataShortCategory = changeFilds(obectOfKeys['shortProduct'], short, dataSource);
     const shortCategory = await ShortProduct.create(dataShortCategory);
