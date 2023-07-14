@@ -7,7 +7,7 @@
    - register POST --> /auth/register
     {
     "email": "required",
-    "imgUrl": "notRequred",
+    "imgUrl": "/statcil/profile1",
     "password": "required",
     "rePassword": "required",
     "circulation": "required",
@@ -15,7 +15,7 @@
     "birthday": "required", format(22/22/2222),
     "firstName": "required",
     "middleName": "notRequired",
-    "lastName": "required",
+    "lastName": "required"
     }
    - login POST --> /auth//login
     {

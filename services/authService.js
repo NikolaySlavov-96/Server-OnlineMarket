@@ -11,44 +11,41 @@ const ActivationModel = require('../models/ActivationModel');
 const ResetPasswordModel = require('../models/ResetPasswordModel');
 
 const { createNewDate } = require('../util/dates');
-const { sendFromNoReplyEmail } = require('./emailService');
 const { generateCode } = require('../util/generatePromocode');
+const { changeFilds } = require('../util/changeFilds');
+const { sendFromNoReplyEmail } = require('./emailService');
 
-async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName, circulation) {
+const obectOfKeys = {
+    'register': ['email', 'imgUrl', 'circulation', 'telephone', 'birthday', 'firstName', 'middleName', 'lastName'],
+}
 
-    const existingEmail = await UserModel.findOne({ email }).collation({ locale: 'en', strength: 2 });
+async function register(body) {
+    const existingEmail = await UserModel.findOne({ email: body.email }).collation({ locale: 'en', strength: 2 });
     if (existingEmail) {
         throw new Error('Email is taken');
     }
 
-    const existingTelephoneNumber = await UserModel.findOne({ telephone });
+    const existingTelephoneNumber = await UserModel.findOne({ telephone: body.telephone });
     if (existingTelephoneNumber) {
         throw new Error('Telephone Number is using');
     }
 
-    const userData = await UserModel.create({
-        email,
-        imgUrl,
-        circulation,
-        password: await hashPassword(password),
-        telephone,
-        birthday,
-        firstName,
-        middleName,
-        lastName,
-        createdAt: createNewDate(),//I got an error (Path `createdAt` is required.);
-        lastUpdate: createNewDate(),
-    });
-
-    const activateCodel = uuid.v4().slice(0, 7);
-    const userId = userData._id;
+    const value = {
+        password: await hashPassword(body.password),
+        createdAt: createNewDate(),
+    }
+    const userFields = changeFilds(obectOfKeys, value, body, 'register');
+    const userData = await UserModel.create(userFields)
+    
+    const activateCodel = generateCode(7)
+    const userId = userData._id
     await ActivationModel.create({
-        userId: userId,
+        userId,
         sendCode: activateCodel,
         dateSend: createNewDate(),
     });
 
-    sendFromNoReplyEmail(email, 'Successful Register', 'register', { userId, activateCodel })
+    sendFromNoReplyEmail(body.email, 'Successful Register', 'register', { userId, activateCodel })
 
     return createTokent(userData);
 }
@@ -152,22 +149,22 @@ async function resetPassword({ email, telephone }) {
 
 async function resetPasswordWithCode({ resetCode, newPassword, repeatNewPassword }) {
     const checkResetCode = await ResetPasswordModel.findOne({ isExpired: false, sendCode: resetCode });
-    if(!checkResetCode) {
+    if (!checkResetCode) {
         throw new Error('Reset code is using or expired')
     }
     checkResetCode.userData = createNewDate();
     checkResetCode.isExpired = true;
-    
+
     const newPass = await hashPassword(newPassword);
     if (newPassword !== repeatNewPassword) {
         throw new Error('Password don\'t match');
     }
-    
+
     const userDate = await UserModel.findOne({ _id: checkResetCode.userId });
     userDate.password = newPass
     userDate.lastUpdate = createNewDate();
     const date = await userDate.save();
-    
+
     await checkResetCode.save();
 
     return createTokent(date)
