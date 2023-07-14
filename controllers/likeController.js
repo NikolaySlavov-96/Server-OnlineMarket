@@ -2,11 +2,11 @@ const { getAllLikes, addLikeToProduct, removeLike } = require("../services/likeS
 const { errorParser } = require("../util/parser");
 
 
-// const getLikes = async (req, res) => {
-//     console.log('here');
-//     const likeCount = await getAllLikes(req.params.productId);
-//     res.json( likeCount );
-// };
+const getLikes = async (req, res) => {
+    console.log('here');
+    const likeCount = await getAllLikes(req.params.productId);
+    res.json( likeCount );
+};
 
 const likeProduct = async (req, res) => {
     try {

@@ -5,6 +5,10 @@ const getAllLikes = async (productId) => {
     return product.likeCount;
 };
 
+const createLike = async() => {
+    return;
+}
+
 const addLikeToProduct = async (productId, userId) => {
     const existing = await likeModel.findOne({ productId });
     if(!existing){
@@ -35,5 +39,6 @@ const removeLike = async (productId, userId) => {
 module.exports = {
     getAllLikes,
     addLikeToProduct,
-    removeLike
+    removeLike,
+    createLike
 }
