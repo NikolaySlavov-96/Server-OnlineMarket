@@ -20,7 +20,7 @@ const addPersonToBlacklist = async (body, message) => {
         const value = {
             createAt: createNewDate(),
         }
-        const field = changeFilds(obectOfKeys, value, { ...body, message }, 'addingInBlacklist');
+        const field = changeFilds(obectOfKeys['addingInBlacklist'], value, { ...body, message });
         return await BlacklistUserModel.create(field);
     };
     isExsisting.commentId.push(body.commentId);

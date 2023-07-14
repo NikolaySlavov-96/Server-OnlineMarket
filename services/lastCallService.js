@@ -20,7 +20,7 @@ const createCallWithCustomer = async (userId, date, description) => {
     const value = {
         createAt: createNewDate(),
     }
-    const field = changeFilds(obectOfKeys, value, { ...date, userId, description }, 'createCall');
+    const field = changeFilds(obectOfKeys['createCall'], value, { ...date, userId, description });
     const createCalls = await LastCallModell.create(field)
 
     return createCalls;
@@ -36,7 +36,7 @@ const editCallWithCustomer = async (userId, callId, date, description) => {
         throw new Error('Not correct form');
     }
 
-    const field = changeFilds(obectOfKeys, oldDate, { ...date, description }, 'editCall')
+    const field = changeFilds(obectOfKeys['editCall'], oldDate, { ...date, description })
 
     return await field.save();
 };

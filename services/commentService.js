@@ -21,7 +21,7 @@ const createCommentForProduct = async (idProduct, owner, dataComment) => {
     const value = {
         createAt: createNewDate(),
     }
-    const field = changeFilds(obectOfKeys, value, { ...dataComment, ownerId: owner, productId: idProduct }, 'createCommentar');
+    const field = changeFilds(obectOfKeys['createCommentar'], value, { ...dataComment, ownerId: owner, productId: idProduct });
     const createComment = await CommentModel.create(field)
     return createComment;
 }
@@ -29,7 +29,7 @@ const createCommentForProduct = async (idProduct, owner, dataComment) => {
 const editCommentById = async (idComment, newDate) => {
     const commentInfo = await CommentModel.findById(idComment);
 
-    const field = changeFilds(obectOfKeys, commentInfo, newDate, 'editCommentar')
+    const field = changeFilds(obectOfKeys['editCommentar'], commentInfo, newDate)
 
     return await field.save();
 }

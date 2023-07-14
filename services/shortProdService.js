@@ -41,14 +41,14 @@ const create = async (dataSource) => {
     const short = {
         price: createPrice._id,
     };
-    const dataShortCategory = changeFilds(obectOfKeys, short, dataSource, 'shortProduct');
+    const dataShortCategory = changeFilds(obectOfKeys['shortProduct'], short, dataSource);
     const shortCategory = await ShortProduct.create(dataShortCategory);
 
     const value = {
         shortId: shortCategory._id,
         createdAt: createNewDate(),
     }
-    const dataSpecificCategory = changeFilds(obectOfKeys, value, dataSource, dataSource.category);
+    const dataSpecificCategory = changeFilds(obectOfKeys[dataSource.category], value, dataSource);
     const specificCategory = await allProductCollection[dataSource.category].create(dataSpecificCategory);
 
     return shortCategory;
@@ -58,8 +58,8 @@ const updateById = async (idSource, dataSource) => {
     const oldShortCategory = await ShortProduct.findById(idSource);
     const oldSpecificCategory = await allProductCollection[dataSource.category].findOne({ shortId: idSource });
 
-    const dataShortCategory = changeFilds(obectOfKeys, oldShortCategory, dataSource, 'shortProduct');
-    const dataSpecificCategory = changeFilds(obectOfKeys, oldSpecificCategory, dataSource, dataSource.category);
+    const dataShortCategory = changeFilds(obectOfKeys['shortProduct'], oldShortCategory, dataSource);
+    const dataSpecificCategory = changeFilds(obectOfKeys[dataSource.category], oldSpecificCategory, dataSource);
 
     await updatePriceWithProduct(oldShortCategory.price, dataSource);
     const shortCategory = await dataShortCategory.save();

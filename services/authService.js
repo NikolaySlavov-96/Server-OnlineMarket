@@ -34,7 +34,7 @@ async function register(body) {
         password: await hashPassword(body.password),
         createdAt: createNewDate(),
     }
-    const userFields = changeFilds(obectOfKeys, value, body, 'register');
+    const userFields = changeFilds(obectOfKeys['register'], value, body);
     const userData = await UserModel.create(userFields)
 
     const activateCodel = generateCode(7)

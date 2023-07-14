@@ -32,7 +32,7 @@ const saveCodeUsers = async (date) => {
     const value = {
         createAt: createNewDate(),
     }
-    const field = changeFilds(obectOfKeys, value, date, 'createCodeUser');
+    const field = changeFilds(obectOfKeys['createCodeUser'], value, date);
     return await RewardCodeModel.create(field);
 };
 
@@ -53,7 +53,7 @@ const createPartnerCode = async (query) => {
     const value = {
         createAt: createNewDate(),
     }
-    const field = changeFilds(obectOfKeys, value, query, 'createCodePartner');
+    const field = changeFilds(obectOfKeys['createCodePartner'], value, query);
     return await PartnerCodeModel.create(field)
 };
 
