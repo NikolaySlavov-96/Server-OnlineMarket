@@ -5,9 +5,12 @@ const getAllLikes = async (productId) => {
     return product.likeCount;
 };
 
-const createLike = async() => {
-    return;
-}
+const createLike = async () => {
+    return await likeModel.create({
+        likeCount: 0,
+        users: []
+    });
+};
 
 const addLikeToProduct = async (productId, userId) => {
     const existing = await likeModel.findOne({ productId });
@@ -34,10 +37,9 @@ const removeLike = async (productId, userId) => {
     product.likeCount--;
     product.users = product.users.filter(x => x.toString() != userId.toString());
     return product.save();
-}
+};
 
 module.exports = {
-    getAllLikes,
     addLikeToProduct,
     removeLike,
     createLike
