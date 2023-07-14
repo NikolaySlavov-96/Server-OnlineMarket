@@ -13,4 +13,6 @@ function badWordCheck(text){
     return result;
 };
 
-module.exports = badWordCheck
+module.exports = {
+    badWordCheck
+}

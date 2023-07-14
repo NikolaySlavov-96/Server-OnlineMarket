@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const { getAllComment, createCommentForProduct, editCommentById, deleteCommentById, getCommentById } = require("../services/commentService");
 const { errorParser } = require('../util/parser');
 const { createNewDateWithDate } = require('../util/dates');
-const badWordCheck = require('../util/badWordCheck');
+const { badWordCheck } = require('../util/badWordCheck');
 
 
 const getCommentarsByIdProduct = async (req, res) => {

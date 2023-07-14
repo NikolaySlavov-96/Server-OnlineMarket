@@ -1,8 +1,9 @@
 const shortProd = require('express').Router();
 const { body } = require('express-validator');
 
-const sourceConteroller = require('../controllers/shortProdContoller')
+const sourceConteroller = require('../controllers/shortProdContoller');
 const commetController = require('../controllers/commentController');
+const likeController = require('../controllers/likeController');
 const { hasUser, hasRole } = require('../middlewares/guards');
 const role = require('./role');
 
@@ -59,5 +60,21 @@ shortProd.delete('/category/:idSource/comment/:idComment',
     hasUser(),
     hasRole(role.forCommentars),
     commetController.deleteCommentByIdComment);
+
+
+// like
+shortProd.get('/likes/:productId', likeController.getLikes);
+
+shortProd.post('/likes/:productId',
+    hasUser(),
+    hasRole(role.likeingProduct),
+    likeController.likeProduct
+);
+
+shortProd.delete('/likes/:productId',
+    hasUser(),
+    hasRole(role.likeingProduct),
+    likeController.unlikeProduct
+)
 
 module.exports = shortProd;

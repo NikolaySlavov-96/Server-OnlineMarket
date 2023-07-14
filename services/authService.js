@@ -34,7 +34,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
         firstName,
         middleName,
         lastName,
-        creadAt: createNewDate(),
+        createdAt: createNewDate(),//I got an error (Path `createdAt` is required.);
         lastUpdate: createNewDate(),
     });
 
@@ -60,15 +60,14 @@ async function login(email, password, stayLogin) {
     }
 
     if (!existingEmail) {
-        throw new Error('Username or Password is not valit');
+        throw new Error('Email or Password is not valit');
     }
 
     const matchPassword = await bcrypt.compare(password, existingEmail.password);
 
     if (!matchPassword) {
-        throw new Error('Username or Password is not valit')
+        throw new Error('Email or Password is not valit')
     }
-
     return createTokent(existingEmail, stayLogin)
 }
 
@@ -79,7 +78,7 @@ async function logout(token) {
     return request;
 }
 
-function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivate }, stayLogin) {
+function createTokent({ _id, email, imgUrl, firstName, lastName, role, isActivate, circulation }, stayLogin) {
     const payload = {
         _id,
         email,

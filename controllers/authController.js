@@ -32,7 +32,6 @@ const createUser = async (req, res) => {
                 throw new Error('Birthday date is invalid');
             }
         }
-
         const token = await register(body.email, body.imgUrl, body.password, body.telephone, body.birthday, body.firstName, body.middleName, body.lastName, body.circulation);
         res.json(token);
     } catch (err) {
