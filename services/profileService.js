@@ -5,9 +5,10 @@ const { createNewDate } = require("../util/dates");
 
 const obectOfKeys = {
     'editUser': ['imgUrl', 'circulation', 'firstName', 'middleName', 'lastName'],
+    'register': ['imgUrl', 'circulation', 'firstName', 'middleName', 'lastName']
 }
 
-const getUserById = async (userId) => {
+const getUserById = async (userId, query) => {
     return await UserModel.findById(userId).find({ isDelete: false });
 }
 
@@ -26,8 +27,22 @@ const deleteUserById = async (userId) => {
     return await userDelete.save();
 }
 
+const getAllRegisterUsers = async (query, limit, skipSource) => {
+    const usersProfile = await UserModel.find(query).limit(limit).skip(skipSource)
+    return usersProfile;
+}
+
+const editUserAccount = async (body) => {
+    const userDate = await UserModel.findById(body.userId);
+    // change logic with adding new role in user
+    const field = changeFilds(obectOfKeys['register'], userDate, body);
+    return await field.save()
+}
+
 module.exports = {
     getUserById,
     editUserById,
     deleteUserById,
+    getAllRegisterUsers,
+    editUserAccount,
 }

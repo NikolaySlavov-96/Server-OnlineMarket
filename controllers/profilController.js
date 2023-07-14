@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-const { getUserById, editUserById, deleteUserById } = require("../services/profileService");
+const { getUserById, editUserById, deleteUserById, getAllRegisterUsers, editUserAccount } = require("../services/profileService");
 const { createNewDate } = require('../util/dates');
 const { errorParser } = require('../util/parser');
 
@@ -44,8 +44,34 @@ const deleteUser = async (req, res) => {
     res.status(204).end();
 }
 
+const getRegisterUsers = async (req, res) => {
+    const page = parseInt(req?.query?.page) || 1;
+    const limit = parseInt(req?.query?.limit) || 10;
+    const skipSource = (page - 1) * limit;
+    const query = {};
+    try {
+        const result = await getAllRegisterUsers(query, limit, skipSource);
+        res.json(result)
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
+}
+
+const editUserDate = async (req, res) => {
+    try {
+        const result = await editUserAccount(req.body);
+        res.json(result);
+    } catch (err) {
+        const message = errorParser(err);
+        res.status(401).json({ message });
+    }
+}
+
 module.exports = {
     getUser,
     updateUser,
     deleteUser,
+    getRegisterUsers,
+    editUserDate,
 }
