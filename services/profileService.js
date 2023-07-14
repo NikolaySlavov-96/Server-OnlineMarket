@@ -1,7 +1,11 @@
 const UserModel = require("../models/UserModel");
+const { changeFilds } = require("../util/changeFilds");
 
 const { createNewDate } = require("../util/dates");
 
+const obectOfKeys = {
+    'editUser': ['imgUrl', 'circulation', 'firstName', 'middleName', 'lastName'],
+}
 
 const getUserById = async (userId) => {
     return await UserModel.findById(userId).find({ isDelete: false });
@@ -9,18 +13,10 @@ const getUserById = async (userId) => {
 
 const editUserById = async (userId, data) => {
     const editUser = await UserModel.findById(userId);
+    // To Do password and birthday waiting 
+    const field = changeFilds(obectOfKeys['editUser'], editUser, data);
 
-    editUser.imgUrl = data.imgUrl;
-    editUser.password = data.password; // To Do verification password before change
-    editUser.birthday = data.birthday;     // To Do verification without have cheating
-    editUser.circulation = data.circulation;
-    editUser.firstName = data.firstName;
-    editUser.middleName = data.middleName;
-    editUser.lastName = data.lastName;
-    
-    editUser.lastUpdate = createNewDate();
-
-    return await editUser.save();
+    return await field.save();
 }
 
 const deleteUserById = async (userId) => {

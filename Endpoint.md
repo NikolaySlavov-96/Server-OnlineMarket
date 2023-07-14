@@ -44,11 +44,10 @@
 
 2. Userprofil Endpoint
     - get user data GET --> /user/profile
-    - edit user date PUT --> /user/profile/
+    - edit user date PUT --> /user/profile
+    ("password": "", "birthday": "",) waiting this moments
     {
         "imgUrl": "",
-        "password": "",
-        "birthday": "",
         "firstName": "",
         "middleName": "",
         "lastName": ""
