@@ -4,7 +4,7 @@ const { createDateWithOption, createNewDateWithDate } = require("../util/dates")
 
 
 const expiredCode = async () => {
-    const { month, day, year } = createDateWithOption(-7)
+    const { month, day, year } = createDateWithOption(-7) // max 7 days using reward code
     const query = { isExpired: false, createAt: { $lte: createNewDateWithDate(`${year}-${month}-${day}`) } }
     const rewart = await getRewarExpireCode(query);
 

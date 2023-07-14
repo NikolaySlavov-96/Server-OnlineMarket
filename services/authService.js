@@ -8,9 +8,11 @@ const JWT_Secret = process.env.JWT_SECRES;
 const UserModel = require('../models/UserModel');
 const BlackListTokenModel = require('../models/BackListTokenModel');
 const ActivationModel = require('../models/ActivationModel');
+const ResetPasswordModel = require('../models/ResetPasswordModel');
 
 const { createNewDate } = require('../util/dates');
 const { sendFromNoReplyEmail } = require('./emailService');
+const { generateCode } = require('../util/generatePromocode');
 
 async function register(email, imgUrl, password, telephone, birthday, firstName, middleName, lastName, circulation) {
 
@@ -28,7 +30,7 @@ async function register(email, imgUrl, password, telephone, birthday, firstName,
         email,
         imgUrl,
         circulation,
-        password: await bcrypt.hash(password, 10),
+        password: await hashPassword(password),
         telephone,
         birthday,
         firstName,
@@ -131,11 +133,55 @@ async function checkFieldInDB(date) {
     return isUsing;
 }
 
+async function resetPassword({ email, telephone }) {
+    const checkEmail = await UserModel.findOne({ email, telephone });
+    if (checkEmail.length === 0) {
+        throw new Error('Email address or telephone number is not valid');
+    }
+
+    const code = generateCode();
+    await ResetPasswordModel.create({
+        userId: checkEmail._id,
+        sendCode: code,
+        dateSend: createNewDate(),
+    });
+
+    sendFromNoReplyEmail(checkEmail.email, 'Reset Password', 'resetPassword', code);
+    return checkEmail
+}
+
+async function resetPasswordWithCode({ resetCode, newPassword, repeatNewPassword }) {
+    const checkResetCode = await ResetPasswordModel.findOne({ isExpired: false, sendCode: resetCode });
+    if(!checkResetCode) {
+        throw new Error('Reset code is using or expired')
+    }
+    checkResetCode.userData = createNewDate();
+    checkResetCode.isExpired = true;
+    
+    const newPass = await hashPassword(newPassword);
+    if (newPassword !== repeatNewPassword) {
+        throw new Error('Password don\'t match');
+    }
+    
+    const userDate = await UserModel.findOne({ _id: checkResetCode.userId });
+    userDate.password = newPass
+    userDate.lastUpdate = createNewDate();
+    const date = await userDate.save();
+    
+    await checkResetCode.save();
+
+    return createTokent(date)
+}
+
+const hashPassword = async (password) => await bcrypt.hash(password, 10);
+
 module.exports = {
     register,
     login,
     logout,
     verificationToken,
     activateAccount,
-    checkFieldInDB
+    checkFieldInDB,
+    resetPassword,
+    resetPasswordWithCode,
 }
