@@ -1,8 +1,8 @@
 const { createNewDate } = require("./dates");
 
-const changeFilds = (obectOfKeys, oldDate, dataSource, collection) => {
+const changeFilds = (obectOfKeys, oldDate, dataSource) => {
     for (const key in dataSource) {
-        if (obectOfKeys[collection].includes(key)) {
+        if (obectOfKeys.includes(key)) {
             oldDate[key] = dataSource[key];
         }
     }
