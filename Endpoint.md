@@ -129,12 +129,12 @@
    - get all calls with customer GET --> /call/user/:userId?sortBy=callDate&limit={quant}
    - post calls for customer talks POST --> /call/user/:userId
    {
-      idType
-      extDescription --> optional at code 999
+      "type": "",
+      "extDescription": "" --> optional at code 999
    }
    - edit calls for customer talks PUT --> /call/user/:userId?callsId={callsId}
    {
-      idType
+      type
       extDescription --> optional at code 999
    }
    - get all Messages for theme talks GET --> /call/messages

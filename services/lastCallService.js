@@ -1,28 +1,32 @@
 const LastCallModell = require("../models/LastCallModel");
+const { changeFilds } = require("../util/changeFilds");
 
 const { createNewDate } = require("../util/dates");
 
+
+const obectOfKeys = {
+    'createCall': ['userId', 'type', 'description', 'extDescription'],
+    'editCall': ['type', 'description', 'extDescription'],
+}
 
 const getCallsWithCustomer = async (userId, query) => {
     return LastCallModell.find({ userId }).sort(query.sortBy).limit(query.limit);
 };
 
-const createCallWithCustomer = async (userId, date, messages) => {
-    if (date.idType == 999 && date.extDescription == '') {
+const createCallWithCustomer = async (userId, date, description) => {
+    if (date.type == 999 && date.extDescription == '') {
         throw new Error('Not correct form');
     }
-    const createCalls = await LastCallModell.create({
-        userId,
-        type: date.idType,
-        description: messages,
-        extDescription: date.extDescription,
+    const value = {
         createAt: createNewDate(),
-    });
+    }
+    const field = changeFilds(obectOfKeys, value, { ...date, userId, description }, 'createCall');
+    const createCalls = await LastCallModell.create(field)
 
     return createCalls;
 };
 
-const editCallWithCustomer = async (userId, callId, date, messages) => {
+const editCallWithCustomer = async (userId, callId, date, description) => {
 
     const oldDate = await LastCallModell.findById(callId);
     if (oldDate.userId.toString() !== userId.toString()) {
@@ -31,12 +35,10 @@ const editCallWithCustomer = async (userId, callId, date, messages) => {
     if (date.idType == 999 && date.extDescription == '') {
         throw new Error('Not correct form');
     }
-    oldDate.type = date.idType;
-    oldDate.description = messages;
-    oldDate.extDescription = date.extDescription;
-    oldDate.lastUpdate = createNewDate();
 
-    await oldDate.save();
+    const field = changeFilds(obectOfKeys, oldDate, { ...date, description }, 'editCall')
+
+    return await field.save();
 };
 
 module.exports = {

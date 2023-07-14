@@ -15,7 +15,7 @@ const getUser = async (req, res) => {
 };
 
 const createCall = async (req, res) => {
-    const messageCode = req.body.idType;
+    const messageCode = req.body.type;
     try {
         if (!messages[messageCode]) {
             throw new Error('Given not valid information')
@@ -29,7 +29,7 @@ const createCall = async (req, res) => {
 };
 
 const editCall = async (req, res) => {
-    const messageCode = req.body.idType;
+    const messageCode = req.body.type;
     try {
         if (!messages[messageCode]) {
             throw new Error('Given not valid information')
