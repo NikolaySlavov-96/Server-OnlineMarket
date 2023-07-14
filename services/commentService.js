@@ -1,7 +1,13 @@
 const CommentModel = require("../models/CommentarModel");
 
 const { createNewDate } = require("../util/dates");
+const { changeFilds } = require("../util/changeFilds");
 
+
+const obectOfKeys = {
+    'createCommentar': ['productId', 'ownerId', 'name', 'commentar'],
+    'editCommentar': ['name', 'commentar'],
+}
 
 const getAllComment = (query, limit, skipSource) => {
     return CommentModel.find(query).limit(limit).skip(skipSource);
@@ -12,25 +18,20 @@ const getCommentById = (idComment) => {
 }
 
 const createCommentForProduct = async (idProduct, owner, dataComment) => {
-    const createComment = await CommentModel.create({
-        productId: idProduct,
-        ownerId: owner,
-        name: dataComment.name,
-        commentar: dataComment.commentar,
+    const value = {
         createAt: createNewDate(),
-        lastUpdate: createNewDate(),
-    });
+    }
+    const field = changeFilds(obectOfKeys, value, { ...dataComment, ownerId: owner, productId: idProduct }, 'createCommentar');
+    const createComment = await CommentModel.create(field)
     return createComment;
 }
 
 const editCommentById = async (idComment, newDate) => {
     const commentInfo = await CommentModel.findById(idComment);
 
-    commentInfo.name = newDate.name;
-    commentInfo.commentar = newDate.commentar;
-    commentInfo.lastUpdate = createNewDate();
+    const field = changeFilds(obectOfKeys, commentInfo, newDate, 'editCommentar')
 
-    return await commentInfo.save();
+    return await field.save();
 }
 
 const deleteCommentById = async (idComment) => {
@@ -49,4 +50,3 @@ module.exports = {
     editCommentById,
     deleteCommentById,
 }
-
