@@ -158,6 +158,8 @@
 
 9. Controll
    - get all comments for from and to date GET --> /control/allCommentars?from={}&to={}isDelete={boolean}
+   - get userProfil GET -- /control/registerUsers --> return all users or by criteria
+   - get userProfil PATCH -- /control/registerUsers --> By whatever criteria you need
 
 ## Front End endpoints
 
